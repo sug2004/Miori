@@ -1,0 +1,14 @@
+import * as Prisma from './internal/prismaNamespaceBrowser.js';
+export { Prisma };
+export * as $Enums from './enums.js';
+export * from './enums.js';
+export type User = Prisma.UserModel;
+export type UserProfile = Prisma.UserProfileModel;
+export type StylePreferences = Prisma.StylePreferencesModel;
+export type WardrobeItem = Prisma.WardrobeItemModel;
+export type Outfit = Prisma.OutfitModel;
+export type OutfitItem = Prisma.OutfitItemModel;
+export type Conversation = Prisma.ConversationModel;
+export type Message = Prisma.MessageModel;
+export type ShoppingRecommendation = Prisma.ShoppingRecommendationModel;
+export type CharacterProfile = Prisma.CharacterProfileModel;

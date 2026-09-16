@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ItemStatus {
+  DRAFT
+  SAVED
+}
+
+enum Role {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  profile                 UserProfile?
+  stylePreferences        StylePreferences?
+  wardrobeItems           WardrobeItem[]
+  outfits                 Outfit[]
+  conversations           Conversation[]
+  shoppingRecommendations ShoppingRecommendation[]
+}
+
+model UserProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  displayName String?
+  avatarUrl   String?
+  bio         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model StylePreferences {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  styleGoals          Json?
+  styleTags           Json?
+  colorPalette        Json?
+  preferredCategories Json?
+  budgetMin           Int?
+  budgetMax           Int?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WardrobeItem {
+  id              String     @id @default(cuid())
+  userId          String
+  imageUrl        String
+  category        String
+  subcategory     String?
+  color           String?
+  secondaryColors Json?
+  pattern         String?
+  material        String?
+  fit             String?
+  styleTags       Json?
+  formality       String?
+  season          String?
+  brand           String?
+  purchaseDate    DateTime?
+  price           Decimal?   @db.Decimal(10, 2)
+  favorite        Boolean    @default(false)
+  wearCount       Int        @default(0)
+  notes           String?
+  status          ItemStatus @default(DRAFT)
+  source          String     @default("ai")
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outfitItems OutfitItem[]
+}
+
+model Outfit {
+  id         String   @id @default(cuid())
+  userId     String
+  title      String
+  occasion   String?
+  notes      String?
+  isFavorite Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outfitItems OutfitItem[]
+}
+
+model OutfitItem {
+  id             String @id @default(cuid())
+  outfitId       String
+  wardrobeItemId String
+  position       Int    @default(0)
+
+  outfit       Outfit       @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  wardrobeItem WardrobeItem @relation(fields: [wardrobeItemId], references: [id], onDelete: Cascade)
+
+  @@unique([outfitId, wardrobeItemId])
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  role           Role
+  content        Json
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+}
+
+model ShoppingRecommendation {
+  id          String   @id @default(cuid())
+  userId      String
+  category    String?
+  title       String
+  description String?
+  reason      String?
+  productUrl  String?
+  imageUrl    String?
+  price       Decimal? @db.Decimal(10, 2)
+  source      String?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CharacterProfile {
+  id          String   @id @default(cuid())
+  name        String
+  personality Json?
+  greeting    String?
+  avatarUrl   String?
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
