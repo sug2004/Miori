@@ -75,12 +75,20 @@ export class AuthService {
   }
 
   private toPublic(
-    user: User & { profile?: { displayName: string | null } | null },
+    user: User & {
+      profile?: {
+        displayName: string | null;
+        avatarUrl: string | null;
+        bio: string | null;
+      } | null;
+    },
   ) {
     return {
       id: user.id,
       email: user.email,
       displayName: user.profile?.displayName ?? null,
+      avatarUrl: user.profile?.avatarUrl ?? null,
+      bio: user.profile?.bio ?? null,
       createdAt: user.createdAt,
     };
   }

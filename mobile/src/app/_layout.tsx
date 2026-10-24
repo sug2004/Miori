@@ -3,7 +3,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 
+import { DrawerMenu } from '@/components/drawer-menu';
 import { AuthProvider, useAuth } from '@/state/auth';
+import { DrawerProvider } from '@/state/drawer';
 import '@/global.css';
 
 SplashScreen.preventAutoHideAsync();
@@ -32,8 +34,12 @@ function RootNavigator() {
         </Stack.Protected>
         <Stack.Protected guard={!!user}>
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="profile" />
+          <Stack.Screen name="edit-profile" />
+          <Stack.Screen name="settings" />
         </Stack.Protected>
       </Stack>
+      <DrawerMenu />
     </>
   );
 }
@@ -41,7 +47,9 @@ function RootNavigator() {
 export default function RootLayout() {
   return (
     <AuthProvider>
-      <RootNavigator />
+      <DrawerProvider>
+        <RootNavigator />
+      </DrawerProvider>
     </AuthProvider>
   );
 }

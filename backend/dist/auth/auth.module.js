@@ -30,6 +30,7 @@ AuthModule = __decorate([
         ],
         controllers: [AuthController],
         providers: [AuthService, JwtStrategy],
+        exports: [PassportModule],
     })
 ], AuthModule);
 export { AuthModule };

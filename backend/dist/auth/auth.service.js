@@ -72,6 +72,8 @@ let AuthService = class AuthService {
             id: user.id,
             email: user.email,
             displayName: user.profile?.displayName ?? null,
+            avatarUrl: user.profile?.avatarUrl ?? null,
+            bio: user.profile?.bio ?? null,
             createdAt: user.createdAt,
         };
     }

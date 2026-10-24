@@ -20,6 +20,7 @@ interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, displayName?: string) => Promise<void>;
   signOut: () => Promise<void>;
+  updateUser: (nextUser: PublicUser) => void;
   clearError: () => void;
 }
 
@@ -101,6 +102,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setError(null);
   }, []);
 
+  const updateUser = useCallback((nextUser: PublicUser) => {
+    setUser(nextUser);
+  }, []);
+
   const clearError = useCallback(() => setError(null), []);
 
   const value = useMemo<AuthContextValue>(
@@ -112,9 +117,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
       signIn,
       signUp,
       signOut,
+      updateUser,
       clearError,
     }),
-    [user, isRestoring, error, signIn, signUp, signOut, clearError],
+    [user, isRestoring, error, signIn, signUp, signOut, updateUser, clearError],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

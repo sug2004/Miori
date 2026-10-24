@@ -17,6 +17,9 @@ Free-form conversation with a personal stylist. Ask "what should I wear to a wed
 ### 5. Smart Shopping (v1+)
 Wardrobe gap analysis identifies missing versatile pieces → suggests real products from retailers with links. No marketplace, no payments — just product cards with reasoning.
 
+### 6. AI Style Psychology & Inspiration Feed (Post-MVP)
+Miori builds a living Style Map from your preferences, wardrobe edits, saved looks, and conversations — capturing aesthetics, colors, silhouettes, occasions, and emotional drivers. The map powers a Pinterest-style feed of AI-generated clothing and outfit concepts, each explaining why it fits you. The map is always visible, editable, and deletable.
+
 ---
 
 ## Why Each Feature Matters
@@ -28,6 +31,7 @@ Wardrobe gap analysis identifies missing versatile pieces → suggests real prod
 | "I don't know how to match pieces" | Style This Item | Shows proven combinations for any piece |
 | "I want personalized advice" | AI Stylist Chat | Conversational stylist that knows your wardrobe |
 | "My wardrobe feels incomplete" | Smart Shopping | Identifies gaps, suggests real purchases |
+| "I want inspiration that actually gets me" | AI Style Psychology & Feed | Learns your taste map, generates a personalized Pinterest-style concept feed |
 
 ---
 
@@ -38,6 +42,8 @@ Wardrobe gap analysis identifies missing versatile pieces → suggests real prod
 **Structured responses.** Outfit recommendations always return structured JSON (not free text), so the UI renders interactive cards — not just paragraphs.
 
 **User-corrected AI.** AI extracts metadata from photos, but the user always has final say. Edit any field before saving.
+
+**Transparent personalization.** The Style Map behind the inspiration feed is always visible, editable, and deletable — style psychology is inferred from app actions only and is never used for clinical claims.
 
 **Companion layer.** An anime-styled character wraps the stylist features with personality, but the engine underneath is pure fashion logic + LLM reasoning.
 

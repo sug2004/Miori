@@ -15,6 +15,7 @@
 7. [Module 4 — AI Stylist Chat](#module-4--ai-stylist-chat) ⏳ Pending
 8. [Module 5 — Companion Layer](#module-5--companion-layer) ⏳ Optional v1
 9. [Module 6 — Smart Shopping](#module-6--smart-shopping) ⏳ Optional v1
+10. [Module 7 — AI Style Psychology & Inspiration Feed](#module-7--ai-style-psychology--inspiration-feed) ⏳ Post-MVP
 
 ---
 
@@ -29,11 +30,14 @@
 | Tab shell + auth screens | ✅ Done |
 | Auth state (token + context) | ✅ Done |
 | Design system components | ✅ Done |
+| Profile, edit profile + settings | ✅ Done |
+| Side drawer navigation | ✅ Done |
 | Wardrobe CRUD + upload | ❌ Not started |
 | Outfit generation logic | ❌ Not started |
 | AI chat + LLM integration | ❌ Not started |
 | Companion layer | ❌ Not started |
 | Shopping / gap analysis | ❌ Not started |
+| AI style psychology map + inspiration feed | ❌ Not started |
 
 ---
 
@@ -77,6 +81,7 @@ npm install
 | `JWT_SECRET` | Random string for JWT signing | `openssl rand -hex 32` |
 | `JWT_EXPIRES_IN` | Token lifetime | `7d` |
 | `PORT` | API listen port | `3000` |
+| `UPLOADTHING_TOKEN` | UploadThing API token for avatar/image uploads | `sk_live_...` |
 
 #### `mobile/.env` (create if needed)
 
@@ -145,16 +150,19 @@ curl http://localhost:3000/api/auth/me \
 - NestJS app with global `/api` prefix, CORS, ValidationPipe
 - Prisma 7 module (global, auto-connect/disconnect) with PostgreSQL adapter
 - Auth module: `POST /auth/signup`, `POST /auth/login`, `GET /auth/me`
+- Profile module: `GET /profile`, `PATCH /profile`, `POST /profile/avatar`, `GET|PUT /profile/style-preferences`
 - JWT strategy (passport-jwt, Bearer extraction), `JwtAuthGuard`, `@CurrentUser` decorator
 - Password hashing with bcryptjs (10 rounds)
 
 **Mobile:**
 - Expo Router file-based routing with `Stack.Protected` auth gates
 - Auth screens (sign-in, sign-up) with validation, error handling, loading states
-- `AuthProvider` context: session restore, signIn/signUp/signOut
+- `AuthProvider` context: session restore, signIn/signUp/signOut, updateUser
 - Token persistence via `expo-secure-store` (native) / `localStorage` (web)
 - Tab shell: Home / Wardrobe / Chat / Shop with native + web tab implementations
-- Design system: Screen, FormField, PrimaryButton, AuthHero, ComingSoon, ThemedText
+- Side drawer navigation + Home dashboard
+- Profile screen with live wardrobe/outfit counts, edit profile (photo upload + bio), settings, sign out
+- Design system: Screen, FormField, PrimaryButton, AuthHero, AuthLayout, UserAvatar, DrawerMenu, ComingSoon, ThemedText
 - Dark warm theme (orange accent, Spline Sans font)
 
 ### Test checklist
@@ -165,6 +173,8 @@ curl http://localhost:3000/api/auth/me \
 - [x] `/auth/me` returns user profile when authenticated
 - [x] Protected routes redirect to login when unauthenticated
 - [x] Tab navigation works on native and web
+- [x] User can view profile stats, edit name/bio, and upload an avatar
+- [x] Drawer navigation and sign-out work
 
 ---
 
@@ -518,6 +528,163 @@ Analyze wardrobe gaps and recommend real products from external retailers.
 
 ---
 
+## Module 7 — AI Style Psychology & Inspiration Feed
+
+**Status:** ⏳ Post-MVP (requires Modules 2–4 data)
+
+### Overview
+
+Build a living **Style Map** from the user's stated preferences, wardrobe, saved looks, and stylist conversations. The map captures *why* the user likes what they like (aesthetic drivers, emotional needs, occasions, silhouettes, colors, materials, price sensitivity) and becomes the ranking foundation for a Pinterest-style inspiration feed of generated clothing/outfit concepts.
+
+This is style psychology, **not clinical or mental-health inference**. The user can inspect, correct, export, and delete the map at any time.
+
+### The Style Map structure
+
+Store as a graph plus an embedding, not a flat list:
+
+```json
+{
+  "version": 1,
+  "confidence": 0.72,
+  "aestheticNodes": [
+    { "id": "minimal", "label": "Minimal", "weight": 0.82, "evidence": ["chat:42", "outfit:12"] },
+    { "id": "old-money", "label": "Old Money", "weight": 0.41, "evidence": ["item:8"] }
+  ],
+  "attributeAffinities": {
+    "colors": [{ "value": "navy", "weight": 0.9 }],
+    "silhouettes": [{ "value": "relaxed", "weight": 0.7 }],
+    "materials": [{ "value": "linen", "weight": 0.6 }],
+    "formality": [{ "value": "smart-casual", "weight": 0.75 }],
+    "patterns": [{ "value": "solid", "weight": 0.85 }]
+  },
+  "psychologicalDrivers": [
+    { "id": "confidence", "label": "Feels confident", "weight": 0.8 },
+    { "id": "comfort", "label": "Comfort-first", "weight": 0.65 },
+    { "id": "self-expression", "label": "Creative expression", "weight": 0.5 }
+  ],
+  "occasionVectors": [
+    { "occasion": "work", "formality": 0.7, "colorBias": ["navy", "grey"], "weight": 0.8 },
+    { "occasion": "date-night", "formality": 0.5, "colorBias": ["black", "earth"], "weight": 0.4 }
+  ],
+  "edges": [
+    { "from": "minimal", "to": "navy", "relation": "prefers_color", "weight": 0.8 },
+    { "from": "comfort", "to": "relaxed", "relation": "drives_silhouette", "weight": 0.7 }
+  ],
+  "signals": [
+    { "source": "wardrobe", "count": 24, "lastUpdated": "2026-10-01T00:00:00Z" },
+    { "source": "chat", "count": 18, "lastUpdated": "2026-10-01T00:00:00Z" }
+  ],
+  "embedding": [0.021, -0.114, "..."]
+}
+```
+
+### Data sources and weights
+
+| Source | Example signal | Suggested weight |
+|--------|----------------|------------------|
+| Onboarding / style preferences | chosen tags, goals, budget | High |
+| Wardrobe metadata | colors, categories, formality, materials | High |
+| User corrections | edits to AI-extracted metadata | Very high |
+| Saved/favorited outfits | repeated combinations | High |
+| Wear counts | items actually worn | Medium |
+| Chat conversations | requests, reactions, rejections | Medium |
+| Inspiration feed feedback | save / dismiss / dwell | Medium |
+| Shopping saves | intent signals | Low |
+
+### Backend Tasks
+
+#### 7.1 Schema
+
+New tables (keep raw evidence separate from inference):
+
+| Table | Purpose |
+|-------|---------|
+| `style_maps` | One per user: version, JSON graph, confidence, embedding, updatedAt |
+| `style_map_signals` | Append-only evidence log (`source`, `refId`, `signal`, `weight`, `createdAt`) |
+| `inspiration_concepts` | Generated concept title, prompt, image URL, attributes, style-map snapshot |
+| `inspiration_feedback` | `SAVED` / `DISMISSED` / `VIEWED` per user + concept |
+
+Add `pgvector` only if semantic retrieval is needed; otherwise rank with weighted attribute matching.
+
+#### 7.2 Derivation pipeline
+
+```
+New signal (wardrobe edit, outfit save, chat turn, feed reaction)
+  → append to style_map_signals
+  → debounce/queue rebuild (e.g. after N signals or on app open)
+  → normalize + aggregate weights
+  → optional LLM pass: infer aesthetic labels, psychological drivers, contradictions
+  → merge into graph (never discard user-confirmed nodes)
+  → recompute embedding
+  → persist new style_maps version
+```
+
+- Deterministic aggregation first; LLM only for labels/reasoning.
+- Every inferred node must keep `evidence` references.
+- Decay old weights slowly so taste can evolve.
+- Rebuild is idempotent and versioned.
+
+#### 7.3 API
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/style-map` | GET | Current map + confidence + last rebuild |
+| `/api/style-map/rebuild` | POST | Force rebuild from signals |
+| `/api/style-map/nodes/:id` | PATCH | User confirms/corrects/removes a node |
+| `/api/style-map/signals` | POST | Record explicit feedback signal |
+| `/api/inspiration/feed` | GET | Paginated Pinterest-style concepts ranked by map |
+| `/api/inspiration/concepts/:id` | GET | Concept detail + why-it-fits reasoning |
+| `/api/inspiration/concepts/:id/feedback` | POST | Save / dismiss / view |
+| `/api/inspiration/regenerate` | POST | Regenerate feed for a chosen occasion/mood |
+
+#### 7.4 Concept generation
+
+- Combine top style-map nodes with seasonal trends and occasion vectors.
+- Generate concept metadata (title, palette, silhouette, material, reasoning).
+- Image generation is optional and must be labeled as AI concept art — do not present it as owned clothing.
+- Cache concepts; regenerate only when the map changes materially.
+- Feed ranking: map affinity (60%) + novelty (20%) + diversity (15%) + feedback history (5%).
+
+### Mobile Tasks
+
+#### 7.5 Screens
+
+- **Style Map**: readable graph/list of aesthetics, drivers, colors, occasions; confidence badges; edit/remove.
+- **Inspiration Feed**: 2-column masonry (Pinterest-style), pull-to-refresh, save/dismiss actions.
+- **Concept Detail**: full image, palette, attributes, "Why this fits you" based on map evidence.
+- **Privacy controls** in Settings: view map, reset map, opt out of psychology inference, delete signals.
+
+#### 7.6 Components
+
+| Component | Purpose |
+|-----------|---------|
+| `StyleMapView` | Graph/list visualization of nodes and edges |
+| `StyleNodeCard` | Editable node with confidence + evidence count |
+| `InspirationMasonry` | Infinite-scroll Pinterest-style grid |
+| `ConceptCard` | Concept image + palette + save/dismiss |
+| `WhyThisFits` | Human-readable reasoning from map nodes |
+| `StyleMapPrivacyPanel` | Inspect / correct / reset / delete |
+
+### Privacy and safety rules
+
+1. Style psychology is inferred, editable, and deletable — never hidden from the user.
+2. Never make clinical, diagnostic, or sensitive-trait claims (health, sexuality, politics, etc.).
+3. Keep evidence tied to app actions only; no third-party scraping of the user's social profiles.
+4. Opt-out disables inference and feed personalization without breaking core styling features.
+5. Inspiration concepts are AI-generated ideas, not real owned items; shopping links must be labeled.
+
+### Done When
+
+- [ ] User can view a Style Map with confidence scores and evidence counts
+- [ ] Wardrobe edits, saved outfits, and chat turns update the map
+- [ ] User can correct or remove inferred nodes and reset the map
+- [ ] Inspiration feed is ranked by the map and supports save/dismiss
+- [ ] Concept detail explains why it fits using map evidence
+- [ ] Opt-out stops inference and personalization
+- [ ] Rebuild is idempotent, versioned, and does not duplicate nodes
+
+---
+
 ## Architecture Reference
 
 ```
@@ -536,7 +703,9 @@ backend/NestJS API
   ├── src/outfit/        → (Module 3) Outfit generation + rules
   ├── src/chat/          → (Module 4) Conversations + messages
   ├── src/companion/     → (Module 5) Character profiles
-  └── src/shopping/      → (Module 6) Gap analysis + recommendations
+  ├── src/shopping/      → (Module 6) Gap analysis + recommendations
+  ├── src/style-map/     → (Module 7) Style Map derivation + signals
+  └── src/inspiration/   → (Module 7) Concept generation + feed ranking
 ```
 
 ### AI Data Flow (Module 4+)
@@ -553,9 +722,23 @@ User message
   → Frontend renders text + outfit cards
 ```
 
+### Style Map Data Flow (Module 7+)
+
+```
+Signal (wardrobe edit / outfit save / chat turn / feed reaction)
+  → POST /api/style-map/signals (or recorded internally)
+  → style_map_signals append-only log
+  → debounced rebuild
+  → deterministic aggregation + optional LLM labeling pass
+  → versioned style_maps graph + embedding
+  → GET /api/inspiration/feed ranks generated concepts
+  → SAVE / DISMISS feedback feeds back into the map
+```
+
 ### Key Rules
 
 1. **LLM never invents clothing.** It only reasons over items in `wardrobe_items`.
 2. **Always structured JSON output.** Never parse free-form LLM text for outfit data.
 3. **Build modules in order.** Each module depends on the previous.
 4. **Test after each module.** Stop, verify, then proceed.
+5. **Style psychology stays transparent.** The Style Map is inferred only from app actions, never hidden, and always user-editable and deletable.

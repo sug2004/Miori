@@ -1,43 +1,37 @@
-import { Text, TextInput, View } from 'react-native';
+import { forwardRef, useState } from 'react';
+import { Text, TextInput, TextInputProps, View } from 'react-native';
 
-interface FormFieldProps {
+interface FormFieldProps extends Omit<TextInputProps, 'value' | 'onChangeText'> {
   label: string;
   value: string;
   onChangeText: (text: string) => void;
-  placeholder?: string;
-  secureTextEntry?: boolean;
-  keyboardType?: 'email-address' | 'default';
-  autoCapitalize?: 'none' | 'sentences' | 'words';
-  autoComplete?: 'email' | 'current-password' | 'new-password' | 'off';
-  textContentType?: 'emailAddress' | 'password' | 'newPassword' | 'none';
 }
 
-export function FormField({
-  label,
-  value,
-  onChangeText,
-  placeholder,
-  secureTextEntry = false,
-  keyboardType = 'default',
-  autoCapitalize = 'none',
-  autoComplete = 'off',
-  textContentType = 'none',
-}: FormFieldProps) {
+export const FormField = forwardRef<TextInput, FormFieldProps>(function FormField(
+  { label, value, onChangeText, placeholder, ...rest },
+  ref,
+) {
+  const [focused, setFocused] = useState(false);
+
   return (
     <View className="gap-2">
       <Text className="text-sm font-medium text-ink">{label}</Text>
       <TextInput
+        ref={ref}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
         placeholderTextColor="#6B665D"
-        secureTextEntry={secureTextEntry}
-        keyboardType={keyboardType}
-        autoCapitalize={autoCapitalize}
-        autoComplete={autoComplete}
-        textContentType={textContentType}
-        className="rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink"
+        selectionColor="#F97316"
+        autoCorrect={false}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        spellCheck={false}
+        className={`rounded-xl border bg-surface px-4 py-3.5 text-base text-ink ${
+          focused ? 'border-accent' : 'border-line'
+        }`}
+        {...rest}
       />
     </View>
   );
-}
+});

@@ -2,6 +2,8 @@ export interface PublicUser {
   id: string;
   email: string;
   displayName: string | null;
+  avatarUrl: string | null;
+  bio: string | null;
   createdAt: string;
 }
 
@@ -12,6 +14,26 @@ export interface AuthResponse {
 
 export interface MeResponse {
   user: PublicUser;
+}
+
+export interface StylePreferences {
+  styleGoals: unknown;
+  styleTags: unknown;
+  colorPalette: unknown;
+  preferredCategories: unknown;
+  budgetMin: number | null;
+  budgetMax: number | null;
+}
+
+export interface ProfileOverview {
+  user: PublicUser;
+  wardrobeItemCount: number;
+  savedLooksCount: number;
+  stylePreferences: StylePreferences | null;
+}
+
+export interface StylePreferencesResponse {
+  stylePreferences: StylePreferences | null;
 }
 
 export interface ApiError {

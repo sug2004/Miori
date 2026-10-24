@@ -5,7 +5,7 @@ import {
   TabSlot,
   type TabTriggerSlotProps,
 } from 'expo-router/ui';
-import { Pressable, useColorScheme, View, StyleSheet } from 'react-native';
+import { Pressable, View, StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 

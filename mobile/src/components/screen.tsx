@@ -8,23 +8,28 @@ interface ScreenProps {
 }
 
 export function Screen({ children, scroll = false }: ScreenProps) {
-  const content = scroll ? (
-    <ScrollView
-      className="flex-1"
-      contentContainerStyle={{ paddingBottom: 32 }}
-      keyboardShouldPersistTaps="handled">
-      {children}
-    </ScrollView>
-  ) : (
-    children
-  );
+  if (scroll) {
+    return (
+      <SafeAreaView className="flex-1 bg-background" edges={['top', 'left', 'right']}>
+        <KeyboardAvoidingView
+          className="flex-1"
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <ScrollView
+            className="flex-1"
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: 48 }}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag">
+            {children}
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-background" edges={['top', 'left', 'right']}>
-      <KeyboardAvoidingView
-        className="flex-1"
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        {content}
+      <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        {children}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
