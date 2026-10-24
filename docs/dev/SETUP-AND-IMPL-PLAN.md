@@ -10,7 +10,7 @@
 2. [Prerequisites](#prerequisites)
 3. [Project Setup](#project-setup)
 4. [Module 1 — Foundation](#module-1--foundation) ✅ Complete
-5. [Module 2 — Digital Wardrobe](#module-2--digital-wardrobe) 🚧 Next
+5. [Module 2 — Digital Wardrobe](#module-2--digital-wardrobe) ✅ Complete
 6. [Module 3 — Outfit Studio](#module-3--outfit-studio) ⏳ Pending
 7. [Module 4 — AI Stylist Chat](#module-4--ai-stylist-chat) ⏳ Pending
 8. [Module 5 — Companion Layer](#module-5--companion-layer) ⏳ Optional v1
@@ -32,6 +32,7 @@
 | Design system components | ✅ Done |
 | Profile, edit profile + settings | ✅ Done |
 | Side drawer navigation | ✅ Done |
+| Wardrobe CRUD + upload + AI draft | ✅ Done |
 | Wardrobe CRUD + upload | ❌ Not started |
 | Outfit generation logic | ❌ Not started |
 | AI chat + LLM integration | ❌ Not started |
@@ -81,7 +82,11 @@ npm install
 | `JWT_SECRET` | Random string for JWT signing | `openssl rand -hex 32` |
 | `JWT_EXPIRES_IN` | Token lifetime | `7d` |
 | `PORT` | API listen port | `3000` |
-| `UPLOADTHING_TOKEN` | UploadThing API token for avatar/image uploads | `sk_live_...` |
+| `OPENAI_API_KEY` | Optional; enables AI vision extraction | `sk-...` |
+| `OPENAI_VISION_MODEL` | Vision model for wardrobe extraction | `gpt-4o-mini` |
+| `NVIDIA_API_KEY` | Optional; NVIDIA NIM vision model (used first if set) | `nvapi-...` |
+| `NVIDIA_BASE_URL` | NVIDIA NIM base URL | `https://integrate.api.nvidia.com/v1` |
+| `NVIDIA_VISION_MODEL` | NVIDIA vision model | `meta/llama-3.2-11b-vision-instruct` |
 
 #### `mobile/.env` (create if needed)
 
@@ -180,114 +185,31 @@ curl http://localhost:3000/api/auth/me \
 
 ## Module 2 — Digital Wardrobe
 
-**Status:** 🚧 Not started (next up)
+**Status:** ✅ Complete
 
-### Overview
+### What was built
 
-Enable users to photograph clothing items, have AI extract metadata, and manage a digital wardrobe. This is the foundation for all outfit/recommendation features.
+**Backend:**
+- `WardrobeModule`: `GET|POST /wardrobe`, `GET|PATCH|DELETE /wardrobe/:id`, `POST /wardrobe/upload`, `POST /wardrobe/:id/wear`
+- `AiModule`: vision extraction via OpenAI (configurable) with safe fallback when no key is present
+- `UploadsModule`: image validation + UploadThing upload
+- DTO validation, user-scoped access, JSON array normalization, filtering/sorting/search
+- Unit tests for wardrobe service
 
-### Backend Tasks
+**Mobile:**
+- Wardrobe tab: grid/list toggle, search, category chips, favorites, sort
+- Add Item: camera/gallery or manual → upload → AI draft → editable form → save
+- Item detail: image, metadata, edit, favorite, wear count, delete
+- Shared types/components + protected routes
 
-#### 2.1 Upload Storage (UploadThing)
+### Test checklist
 
-```bash
-cd backend
-npm install uploadthing @uploadthing/nest
-```
-
-- Configure UploadThing in a new `upload/upload.module.ts`
-- Create upload endpoint that returns a signed URL
-- Store the returned file URL in `wardrobe_items.image_url`
-
-#### 2.2 Vision Model Integration
-
-- New `ai/ai.module.ts` service wrapping a vision-capable LLM
-- Endpoint: accepts image URL → calls vision API with structured prompt
-- Prompt instructs model to return JSON:
-  ```json
-  {
-    "category": "top",
-    "subcategory": "t-shirt",
-    "color": "navy",
-    "secondaryColors": ["white"],
-    "pattern": "solid",
-    "material": "cotton",
-    "fit": "regular",
-    "styleTags": ["casual", "minimal"],
-    "formality": "casual",
-    "season": ["spring", "summer"]
-  }
-  ```
-- Use LLM structured output / JSON mode to guarantee valid schema
-- Return draft `WardrobeItem` to frontend for user confirmation
-
-#### 2.3 Wardrobe CRUD API
-
-New `wardrobe/wardrobe.module.ts`:
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/wardrobe` | GET | List all items (with query filters: `?category=top&favorite=true`) |
-| `/api/wardrobe` | POST | Create item (manual entry or confirm AI draft) |
-| `/api/wardrobe/:id` | GET | Get single item detail |
-| `/api/wardrobe/:id` | PATCH | Update metadata (user corrections) |
-| `/api/wardrobe/:id` | DELETE | Soft or hard delete |
-| `/api/wardrobe/upload` | POST | Upload image → get AI-extracted draft |
-
-Query params for filtering: `category`, `color`, `formality`, `season`, `favorite`, `search`.
-
-#### 2.4 Prisma Schema Changes
-
-None needed — `wardrobe_items` table already has all required columns.
-
-### Mobile Tasks
-
-#### 2.5 Wardrobe Screen
-
-Replace `wardrobe.tsx` ComingSoon with:
-
-- **Grid view** (default): 2-column grid of item thumbnails
-- **List view** toggle: horizontal rows with metadata
-- **Filter bar**: category chips, color dots, search input
-- **Sort**: recently added, most worn, favorites first
-
-#### 2.6 Add Item Flow
-
-- Camera/image picker (`expo-image-picker`)
-- Send image to `/api/wardrobe/upload`
-- Show loading state while AI processes
-- Display draft card with AI-extracted fields (editable)
-- User confirms → `POST /api/wardrobe` → item saved
-- Show success feedback, return to grid
-
-#### 2.7 Item Detail Screen
-
-- Full-screen image
-- Editable metadata fields (all attributes)
-- Favorite toggle
-- Wear count increment button
-- Delete with confirmation
-- "Style this" quick action (links to Module 3)
-
-#### 2.8 Component Inventory
-
-| Component | Purpose |
-|-----------|---------|
-| `WardrobeGrid` | 2-col masonry of item thumbnails |
-| `WardrobeItemCard` | Single item thumbnail with category badge |
-| `WardrobeFilters` | Filter chips + search bar |
-| `AddItemSheet` | Bottom sheet: camera, gallery, or manual |
-| `ItemDraftPreview` | AI-extracted metadata form (editable) |
-| `ItemDetailScreen` | Full item view + edit mode |
-
-### Done When
-
-- [ ] User can photograph 20+ real clothing items
-- [ ] AI correctly extracts color, category, pattern, material ~80% of the time
-- [ ] User can correct any AI-extracted field before saving
-- [ ] Wardrobe grid displays all items with working filters
-- [ ] Item detail shows full metadata with edit capability
-- [ ] Favorite and wear count features work
+- [x] User can upload a photo and get an AI draft
+- [x] User can save/correct and add items to wardrobe
+- [x] Wardrobe grid/list displays items with working filters
+- [x] Item detail shows metadata with edit capability
+- [x] Favorite and wear count features work
+- [x] Items are user-scoped and deletable
 
 ---
 

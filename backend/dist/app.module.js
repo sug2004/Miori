@@ -11,11 +11,18 @@ import { AppService } from './app.service.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { ProfileModule } from './profile/profile.module.js';
+import { WardrobeModule } from './wardrobe/wardrobe.module.js';
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     Module({
-        imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, ProfileModule],
+        imports: [
+            ConfigModule.forRoot({ isGlobal: true }),
+            PrismaModule,
+            AuthModule,
+            ProfileModule,
+            WardrobeModule,
+        ],
         controllers: [AppController],
         providers: [AppService],
     })

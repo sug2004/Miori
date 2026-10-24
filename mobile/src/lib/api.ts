@@ -170,5 +170,8 @@ export const api = {
   patch<T>(path: string, body?: unknown, token?: string | null) {
     return request<T>(path, { method: 'PATCH', body, token });
   },
+  remove<T>(path: string, token?: string | null) {
+    return request<T>(path, { method: 'DELETE', token });
+  },
   upload,
 };

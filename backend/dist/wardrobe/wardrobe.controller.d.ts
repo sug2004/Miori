@@ -1,0 +1,151 @@
+import type { User } from '../generated/prisma/client.js';
+import type { ImageFile } from '../uploads/uploads.service.js';
+import { CreateWardrobeItemDto } from './dto/create-wardrobe-item.dto.js';
+import { UpdateWardrobeItemDto } from './dto/update-wardrobe-item.dto.js';
+import { WardrobeService } from './wardrobe.service.js';
+export declare class WardrobeController {
+    private readonly wardrobeService;
+    constructor(wardrobeService: WardrobeService);
+    list(user: User, category?: string, favorite?: string, status?: string, search?: string, sort?: string): Promise<{
+        items: {
+            id: string;
+            userId: string;
+            imageUrl: string;
+            category: string;
+            subcategory: string | null;
+            color: string | null;
+            secondaryColors: string[];
+            pattern: string | null;
+            material: string | null;
+            fit: string | null;
+            styleTags: string[];
+            formality: string | null;
+            season: string | null;
+            brand: string | null;
+            purchaseDate: string | null;
+            price: number | null;
+            favorite: boolean;
+            wearCount: number;
+            notes: string | null;
+            status: import("../generated/prisma/enums.js").ItemStatus;
+            source: string;
+            createdAt: string;
+            updatedAt: string;
+        }[];
+    }>;
+    upload(user: User, file?: ImageFile): Promise<{
+        imageUrl: string;
+        draft: import("../ai/ai.service.js").WardrobeDraft;
+    }>;
+    create(user: User, dto: CreateWardrobeItemDto): Promise<{
+        item: {
+            id: string;
+            userId: string;
+            imageUrl: string;
+            category: string;
+            subcategory: string | null;
+            color: string | null;
+            secondaryColors: string[];
+            pattern: string | null;
+            material: string | null;
+            fit: string | null;
+            styleTags: string[];
+            formality: string | null;
+            season: string | null;
+            brand: string | null;
+            purchaseDate: string | null;
+            price: number | null;
+            favorite: boolean;
+            wearCount: number;
+            notes: string | null;
+            status: import("../generated/prisma/enums.js").ItemStatus;
+            source: string;
+            createdAt: string;
+            updatedAt: string;
+        };
+    }>;
+    get(user: User, id: string): Promise<{
+        item: {
+            id: string;
+            userId: string;
+            imageUrl: string;
+            category: string;
+            subcategory: string | null;
+            color: string | null;
+            secondaryColors: string[];
+            pattern: string | null;
+            material: string | null;
+            fit: string | null;
+            styleTags: string[];
+            formality: string | null;
+            season: string | null;
+            brand: string | null;
+            purchaseDate: string | null;
+            price: number | null;
+            favorite: boolean;
+            wearCount: number;
+            notes: string | null;
+            status: import("../generated/prisma/enums.js").ItemStatus;
+            source: string;
+            createdAt: string;
+            updatedAt: string;
+        };
+    }>;
+    update(user: User, id: string, dto: UpdateWardrobeItemDto): Promise<{
+        item: {
+            id: string;
+            userId: string;
+            imageUrl: string;
+            category: string;
+            subcategory: string | null;
+            color: string | null;
+            secondaryColors: string[];
+            pattern: string | null;
+            material: string | null;
+            fit: string | null;
+            styleTags: string[];
+            formality: string | null;
+            season: string | null;
+            brand: string | null;
+            purchaseDate: string | null;
+            price: number | null;
+            favorite: boolean;
+            wearCount: number;
+            notes: string | null;
+            status: import("../generated/prisma/enums.js").ItemStatus;
+            source: string;
+            createdAt: string;
+            updatedAt: string;
+        };
+    }>;
+    remove(user: User, id: string): Promise<{
+        success: boolean;
+    }>;
+    markWorn(user: User, id: string): Promise<{
+        item: {
+            id: string;
+            userId: string;
+            imageUrl: string;
+            category: string;
+            subcategory: string | null;
+            color: string | null;
+            secondaryColors: string[];
+            pattern: string | null;
+            material: string | null;
+            fit: string | null;
+            styleTags: string[];
+            formality: string | null;
+            season: string | null;
+            brand: string | null;
+            purchaseDate: string | null;
+            price: number | null;
+            favorite: boolean;
+            wearCount: number;
+            notes: string | null;
+            status: import("../generated/prisma/enums.js").ItemStatus;
+            source: string;
+            createdAt: string;
+            updatedAt: string;
+        };
+    }>;
+}

@@ -37,6 +37,8 @@ function RootNavigator() {
           <Stack.Screen name="profile" />
           <Stack.Screen name="edit-profile" />
           <Stack.Screen name="settings" />
+          <Stack.Screen name="add-item" />
+          <Stack.Screen name="item/[id]" />
         </Stack.Protected>
       </Stack>
       <DrawerMenu />
