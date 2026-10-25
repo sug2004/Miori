@@ -12,6 +12,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { ProfileModule } from './profile/profile.module.js';
 import { WardrobeModule } from './wardrobe/wardrobe.module.js';
+import { OutfitModule } from './outfit/outfit.module.js';
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -22,6 +23,7 @@ AppModule = __decorate([
             AuthModule,
             ProfileModule,
             WardrobeModule,
+            OutfitModule,
         ],
         controllers: [AppController],
         providers: [AppService],

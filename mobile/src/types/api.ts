@@ -115,3 +115,33 @@ export class NetworkError extends Error {
     this.name = 'NetworkError';
   }
 }
+
+export interface OutfitItem {
+  id: string;
+  outfitId?: string;
+  wardrobeItemId: string;
+  position: number;
+  wardrobeItem: WardrobeItem;
+}
+
+export interface Outfit {
+  id: string;
+  userId?: string;
+  title: string;
+  occasion?: string | null;
+  notes?: string | null;
+  isFavorite: boolean;
+  reason?: string;
+  items?: OutfitItem[];
+  outfitItems?: OutfitItem[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface GenerateOutfitsResponse {
+  outfits: Outfit[];
+}
+
+export interface StyleItemResponse {
+  looks: Outfit[];
+}

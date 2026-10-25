@@ -56,7 +56,7 @@ let AiService = AiService_1 = class AiService {
                         },
                     ],
                 }),
-                signal: AbortSignal.timeout(30_000),
+                signal: AbortSignal.timeout(60_000),
             });
             if (!response.ok) {
                 this.logger.warn(`NVIDIA vision request failed with ${response.status}`);
@@ -103,7 +103,7 @@ let AiService = AiService_1 = class AiService {
                         },
                     ],
                 }),
-                signal: AbortSignal.timeout(25_000),
+                signal: AbortSignal.timeout(45_000),
             });
             if (!response.ok) {
                 this.logger.warn(`OpenAI vision request failed with ${response.status}`);

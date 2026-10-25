@@ -11,7 +11,7 @@
 3. [Project Setup](#project-setup)
 4. [Module 1 — Foundation](#module-1--foundation) ✅ Complete
 5. [Module 2 — Digital Wardrobe](#module-2--digital-wardrobe) ✅ Complete
-6. [Module 3 — Outfit Studio](#module-3--outfit-studio) ⏳ Pending
+6. [Module 3 — Outfit Studio](#module-3--outfit-studio) 🚧 Next
 7. [Module 4 — AI Stylist Chat](#module-4--ai-stylist-chat) ⏳ Pending
 8. [Module 5 — Companion Layer](#module-5--companion-layer) ⏳ Optional v1
 9. [Module 6 — Smart Shopping](#module-6--smart-shopping) ⏳ Optional v1

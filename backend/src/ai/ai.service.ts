@@ -70,7 +70,7 @@ export class AiService {
             },
           ],
         }),
-        signal: AbortSignal.timeout(30_000),
+        signal: AbortSignal.timeout(60_000),
       });
 
       if (!response.ok) {
@@ -121,7 +121,7 @@ export class AiService {
             },
           ],
         }),
-        signal: AbortSignal.timeout(25_000),
+        signal: AbortSignal.timeout(45_000),
       });
 
       if (!response.ok) {
