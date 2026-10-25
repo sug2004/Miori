@@ -6,7 +6,10 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { ProfileModule } from './profile/profile.module.js';
 import { WardrobeModule } from './wardrobe/wardrobe.module.js';
+import { AiModule } from './ai/ai.module.js';
+import { UploadsModule } from './uploads/uploads.module.js';
 import { OutfitModule } from './outfit/outfit.module.js';
+import { ChatModule } from './chat/chat.module.js';
 
 @Module({
   imports: [
@@ -15,7 +18,10 @@ import { OutfitModule } from './outfit/outfit.module.js';
     AuthModule,
     ProfileModule,
     WardrobeModule,
+    AiModule,
+    UploadsModule,
     OutfitModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
