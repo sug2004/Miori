@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 
 import { Image } from 'expo-image';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Screen } from '@/components/screen';
 import { api } from '@/lib/api';
 
@@ -46,13 +47,13 @@ export default function ChatScreen() {
   };
 
   return (
-    <Screen>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className="flex-1">
+    <SafeAreaView className="flex-1 bg-background" edges={['top']}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0} className="flex-1">
         <View className="px-5 pt-4 pb-2">
           <Text className="font-display text-3xl font-semibold text-ink">Mio - Stylist Waifu</Text>
           <Text className="mt-1 text-sm text-muted">Your caring anime stylist</Text>
         </View>
-        <ScrollView className="flex-1 px-5" contentContainerStyle={{ gap: 12, paddingVertical: 12 }}>
+        <ScrollView className="flex-1 px-5" contentContainerStyle={{ gap: 12, paddingVertical: 12 }} keyboardShouldPersistTaps="handled">
           {loading ? (
             <View className="items-center py-8">
               <ActivityIndicator color="#F97316" />
@@ -85,19 +86,21 @@ export default function ChatScreen() {
             </View>
           ) : null}
         </ScrollView>
-        <View className="px-5 pb-4 flex-row gap-2">
+        <View className="px-5 pb-6 pt-2 flex-row gap-2 bg-background border-t border-line">
           <TextInput
             value={input}
             onChangeText={setInput}
             placeholder="Talk to Mio~"
             placeholderTextColor="#9CA3AF"
             className="flex-1 rounded-full border border-line bg-surface px-4 py-2.5 text-ink"
+            returnKeyType="send"
+            onSubmitEditing={send}
           />
           <Pressable onPress={send} disabled={sending || !input.trim()} className="rounded-full bg-accent px-5 items-center justify-center">
             <Text className="text-white font-semibold">Send</Text>
           </Pressable>
         </View>
       </KeyboardAvoidingView>
-    </Screen>
+    </SafeAreaView>
   );
 }
