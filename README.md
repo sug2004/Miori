@@ -131,6 +131,7 @@ Scan the QR code with Expo Go, or press `i` / `a` for a simulator.
 - [Setup & implementation plan](/docs/dev/SETUP-AND-IMPL-PLAN.md) — step by step setup + per-module task breakdown
 - [Feature highlights](/docs/features.md) — what each feature does and why it matters
 - [Module 2 — Digital Wardrobe](/docs/modules/MODULE-02-DIGITAL-WARDROBE.md)
+- [Module 3 — Outfit Studio](/docs/modules/MODULE-03-OUTFIT-STUDIO.md)
 
 ## API Overview
 
