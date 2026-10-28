@@ -13,7 +13,12 @@ export interface WardrobeDraft {
 }
 export declare class AiService {
     private readonly logger;
+    generateText(prompt: string, system?: string): Promise<string>;
+    private tryGroqText;
+    private tryGeminiText;
+    private tryOpenAIText;
     extractWardrobeDraft(imageUrl: string): Promise<WardrobeDraft>;
+    private tryGeminiVision;
     private tryNvidia;
     private tryOpenAI;
     private extractJson;

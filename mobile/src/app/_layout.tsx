@@ -1,7 +1,7 @@
 import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 
 import { DrawerMenu } from '@/components/drawer-menu';
 import { AuthProvider, useAuth } from '@/state/auth';
@@ -55,3 +55,4 @@ export default function RootLayout() {
     </AuthProvider>
   );
 }
+

@@ -9,7 +9,117 @@ import { Injectable, Logger } from '@nestjs/common';
 const FIELDS = 'category, subcategory, color, secondaryColors, pattern, material, fit, styleTags, formality, season';
 let AiService = AiService_1 = class AiService {
     logger = new Logger(AiService_1.name);
+    async generateText(prompt, system) {
+        if (process.env.GROQ_API_KEY) {
+            const r = await this.tryGroqText(prompt, system);
+            if (r?.trim()) {
+                this.logger.log('Provider: Groq');
+                return r;
+            }
+        }
+        if (process.env.GEMINI_API_KEY) {
+            const r = await this.tryGeminiText(prompt, system);
+            if (r?.trim()) {
+                this.logger.log('Provider: Gemini');
+                return r;
+            }
+        }
+        if (process.env.OPENAI_API_KEY) {
+            const r = await this.tryOpenAIText(prompt, system);
+            if (r?.trim()) {
+                this.logger.log('Provider: OpenAI');
+                return r;
+            }
+        }
+        this.logger.error('All AI providers failed or no keys configured');
+        throw new Error('No AI provider available');
+    }
+    async tryGroqText(prompt, system) {
+        try {
+            const baseUrl = process.env.GROQ_BASE_URL || 'https://api.groq.com/openai/v1';
+            const model = process.env.GROQ_MODEL || 'llama-3.1-8b-instant';
+            const messages = [];
+            if (system)
+                messages.push({ role: 'system', content: system });
+            messages.push({ role: 'user', content: prompt });
+            const res = await fetch(`${baseUrl}/chat/completions`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ model, temperature: 0.7, max_tokens: 1024, messages }),
+                signal: AbortSignal.timeout(30_000),
+            });
+            if (!res.ok) {
+                const body = await res.text().catch(() => '');
+                this.logger.warn(`Groq failed ${res.status}: ${body.slice(0, 200)}`);
+                return null;
+            }
+            const data = (await res.json());
+            const msg = data?.choices?.[0]?.message;
+            return msg?.content || msg?.reasoning || null;
+        }
+        catch (err) {
+            this.logger.warn(`Groq error: ${err.message}`);
+            return null;
+        }
+    }
+    async tryGeminiText(prompt, system) {
+        try {
+            const baseUrl = process.env.GEMINI_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta/openai';
+            const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+            const messages = [];
+            if (system)
+                messages.push({ role: 'system', content: system });
+            messages.push({ role: 'user', content: prompt });
+            const res = await fetch(`${baseUrl}/chat/completions`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${process.env.GEMINI_API_KEY}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ model, temperature: 0.7, max_tokens: 1024, messages }),
+                signal: AbortSignal.timeout(30_000),
+            });
+            if (!res.ok) {
+                const body = await res.text().catch(() => '');
+                this.logger.warn(`Gemini failed ${res.status}: ${body.slice(0, 200)}`);
+                return null;
+            }
+            const data = (await res.json());
+            return data?.choices?.[0]?.message?.content ?? null;
+        }
+        catch (err) {
+            this.logger.warn(`Gemini error: ${err.message}`);
+            return null;
+        }
+    }
+    async tryOpenAIText(prompt, system) {
+        try {
+            const messages = [];
+            if (system)
+                messages.push({ role: 'system', content: system });
+            messages.push({ role: 'user', content: prompt });
+            const res = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ model: process.env.OPENAI_TEXT_MODEL || 'gpt-4o-mini', temperature: 0.7, max_tokens: 1024, messages }),
+                signal: AbortSignal.timeout(45_000),
+            });
+            if (!res.ok) {
+                const body = await res.text().catch(() => '');
+                this.logger.warn(`OpenAI failed ${res.status}: ${body.slice(0, 200)}`);
+                return null;
+            }
+            const data = (await res.json());
+            return data?.choices?.[0]?.message?.content ?? null;
+        }
+        catch (err) {
+            this.logger.warn(`OpenAI error: ${err.message}`);
+            return null;
+        }
+    }
     async extractWardrobeDraft(imageUrl) {
+        if (process.env.GEMINI_API_KEY) {
+            const result = await this.tryGeminiVision(imageUrl);
+            if (result)
+                return result;
+        }
         if (process.env.NVIDIA_API_KEY) {
             const result = await this.tryNvidia(imageUrl);
             if (result)
@@ -22,6 +132,51 @@ let AiService = AiService_1 = class AiService {
         }
         return this.fallbackDraft();
     }
+    async tryGeminiVision(imageUrl) {
+        try {
+            const baseUrl = process.env.GEMINI_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta/openai';
+            const model = process.env.GEMINI_VISION_MODEL || process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+            const res = await fetch(`${baseUrl}/chat/completions`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${process.env.GEMINI_API_KEY}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model,
+                    temperature: 0.2,
+                    response_format: { type: 'json_object' },
+                    messages: [
+                        {
+                            role: 'system',
+                            content: 'You catalogue clothing photos. Return ONLY JSON with keys: ' +
+                                FIELDS +
+                                '. category must be one of: top, bottom, outerwear, dress, shoes, accessory. secondaryColors and styleTags arrays. Use null for unknown. season spring/summer/autumn/winter/all-season.',
+                        },
+                        {
+                            role: 'user',
+                            content: [
+                                { type: 'text', text: `Classify main clothing item. Return JSON with keys: ${FIELDS}.` },
+                                { type: 'image_url', image_url: { url: imageUrl } },
+                            ],
+                        },
+                    ],
+                }),
+                signal: AbortSignal.timeout(60_000),
+            });
+            if (!res.ok) {
+                this.logger.warn(`Gemini vision failed ${res.status}`);
+                return null;
+            }
+            const data = (await res.json());
+            const content = data?.choices?.[0]?.message?.content;
+            if (!content)
+                return null;
+            const parsed = typeof content === 'string' ? this.extractJson(content) : content;
+            return this.sanitize(parsed);
+        }
+        catch (err) {
+            this.logger.warn(`Gemini vision error: ${err.message}`);
+            return null;
+        }
+    }
     async tryNvidia(imageUrl) {
         const apiKey = process.env.NVIDIA_API_KEY;
         const baseUrl = process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1';
@@ -29,10 +184,7 @@ let AiService = AiService_1 = class AiService {
         try {
             const response = await fetch(`${baseUrl}/chat/completions`, {
                 method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json',
-                },
+                headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     model,
                     temperature: 0.2,
@@ -42,15 +194,12 @@ let AiService = AiService_1 = class AiService {
                             role: 'system',
                             content: 'You catalogue clothing photos. Return ONLY valid JSON with keys: ' +
                                 FIELDS +
-                                '. Identify the exact garment type. Set category to exactly one of: top, bottom, outerwear, dress, shoes, accessory based on the item. Set subcategory to the specific item name like "Henley Shirt", "Oxford Shirt", "Crewneck Tee", "Ribbed Top", "Wide Leg Jeans", "Straight Jeans", "Blazer", "Trench Coat", "Dress", "Sneakers", "Loafers" WITHOUT prefixing with the category. Set color to the dominant visible color in lowercase (e.g. "black", "white", "navy", "beige", "olive") or null ONLY if truly unidentifiable. Always try to guess color if the item is visible. secondaryColors and styleTags must be arrays of short strings. Use null for unknown values. season should be one of: spring, summer, autumn, winter, all-season.',
+                                '. category must be one of: top, bottom, outerwear, dress, shoes, accessory. secondaryColors and styleTags must be arrays. Use null for unknown. season: spring/summer/autumn/winter/all-season.',
                         },
                         {
                             role: 'user',
                             content: [
-                                {
-                                    type: 'text',
-                                    text: 'Classify the main clothing item. Return JSON only with category, subcategory, color, secondaryColors, pattern, material, fit, styleTags, formality, season.',
-                                },
+                                { type: 'text', text: `Classify the main clothing item. Return JSON only with keys: ${FIELDS}.` },
                                 { type: 'image_url', image_url: { url: imageUrl } },
                             ],
                         },
@@ -59,7 +208,7 @@ let AiService = AiService_1 = class AiService {
                 signal: AbortSignal.timeout(60_000),
             });
             if (!response.ok) {
-                this.logger.warn(`NVIDIA vision request failed with ${response.status}`);
+                this.logger.warn(`NVIDIA vision failed ${response.status}`);
                 return null;
             }
             const payload = (await response.json());
@@ -69,19 +218,15 @@ let AiService = AiService_1 = class AiService {
             return this.sanitize(this.extractJson(content));
         }
         catch (err) {
-            this.logger.warn(`NVIDIA vision extraction failed: ${err.message}`);
+            this.logger.warn(`NVIDIA vision error: ${err.message}`);
             return null;
         }
     }
     async tryOpenAI(imageUrl) {
-        const apiKey = process.env.OPENAI_API_KEY;
         try {
             const response = await fetch('https://api.openai.com/v1/chat/completions', {
                 method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json',
-                },
+                headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     model: process.env.OPENAI_VISION_MODEL ?? 'gpt-4o-mini',
                     temperature: 0.2,
@@ -91,8 +236,7 @@ let AiService = AiService_1 = class AiService {
                             role: 'system',
                             content: 'You catalogue clothing photos. Return ONLY a JSON object. ' +
                                 'category must be one of: top, bottom, outerwear, dress, shoes, accessory. ' +
-                                'secondaryColors and styleTags must be arrays of short strings. ' +
-                                'Use null for unknown values. season should be one of: spring, summer, autumn, winter, all-season.',
+                                'secondaryColors and styleTags must be arrays. Use null for unknown. season: spring/summer/autumn/winter/all-season.',
                         },
                         {
                             role: 'user',
@@ -106,7 +250,7 @@ let AiService = AiService_1 = class AiService {
                 signal: AbortSignal.timeout(45_000),
             });
             if (!response.ok) {
-                this.logger.warn(`OpenAI vision request failed with ${response.status}`);
+                this.logger.warn(`OpenAI vision failed ${response.status}`);
                 return null;
             }
             const payload = (await response.json());
@@ -116,7 +260,7 @@ let AiService = AiService_1 = class AiService {
             return this.sanitize(JSON.parse(content));
         }
         catch (err) {
-            this.logger.warn(`OpenAI vision extraction failed: ${err.message}`);
+            this.logger.warn(`OpenAI vision error: ${err.message}`);
             return null;
         }
     }
@@ -146,16 +290,10 @@ let AiService = AiService_1 = class AiService {
     sanitize(input) {
         const category = this.normalizeCategory(this.text(input.category));
         let subcategory = this.text(input.subcategory);
-        if (subcategory) {
+        if (subcategory)
             subcategory = this.stripCategoryWords(subcategory);
-        }
         let color = this.text(input.color);
-        if (!color) {
-            color = '';
-        }
-        else {
-            color = color.toLowerCase().replace(/[^a-z\s]/g, '').trim();
-        }
+        color = color ? color.toLowerCase().replace(/[^a-z\s]/g, '').trim() : '';
         return {
             category,
             subcategory,
@@ -204,8 +342,8 @@ let AiService = AiService_1 = class AiService {
         if (!Array.isArray(value))
             return [];
         return value
-            .filter((entry) => typeof entry === 'string')
-            .map((entry) => entry.trim())
+            .filter((e) => typeof e === 'string')
+            .map((e) => e.trim())
             .filter(Boolean)
             .slice(0, 12);
     }
