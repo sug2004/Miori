@@ -356,8 +356,8 @@ export type WardrobeItemWhereInput = {
   source?: Prisma.StringFilter<"WardrobeItem"> | string
   createdAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   outfitItems?: Prisma.OutfitItemListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type WardrobeItemOrderByWithRelationInput = {
@@ -384,8 +384,8 @@ export type WardrobeItemOrderByWithRelationInput = {
   source?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
   outfitItems?: Prisma.OutfitItemOrderByRelationAggregateInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type WardrobeItemWhereUniqueInput = Prisma.AtLeast<{
@@ -415,8 +415,8 @@ export type WardrobeItemWhereUniqueInput = Prisma.AtLeast<{
   source?: Prisma.StringFilter<"WardrobeItem"> | string
   createdAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   outfitItems?: Prisma.OutfitItemListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type WardrobeItemOrderByWithAggregationInput = {
@@ -502,8 +502,8 @@ export type WardrobeItemCreateInput = {
   source?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutWardrobeItemsInput
   outfitItems?: Prisma.OutfitItemCreateNestedManyWithoutWardrobeItemInput
+  user: Prisma.UserCreateNestedOneWithoutWardrobeItemsInput
 }
 
 export type WardrobeItemUncheckedCreateInput = {
@@ -556,8 +556,8 @@ export type WardrobeItemUpdateInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutWardrobeItemsNestedInput
   outfitItems?: Prisma.OutfitItemUpdateManyWithoutWardrobeItemNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutWardrobeItemsNestedInput
 }
 
 export type WardrobeItemUncheckedUpdateInput = {
@@ -1231,8 +1231,8 @@ export type WardrobeItemSelect<ExtArgs extends runtime.Types.Extensions.Internal
   source?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   outfitItems?: boolean | Prisma.WardrobeItem$outfitItemsArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.WardrobeItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wardrobeItem"]>
 
@@ -1318,8 +1318,8 @@ export type WardrobeItemSelectScalar = {
 
 export type WardrobeItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "imageUrl" | "category" | "subcategory" | "color" | "secondaryColors" | "pattern" | "material" | "fit" | "styleTags" | "formality" | "season" | "brand" | "purchaseDate" | "price" | "favorite" | "wearCount" | "notes" | "status" | "source" | "createdAt" | "updatedAt", ExtArgs["result"]["wardrobeItem"]>
 export type WardrobeItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   outfitItems?: boolean | Prisma.WardrobeItem$outfitItemsArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.WardrobeItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WardrobeItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1332,8 +1332,8 @@ export type WardrobeItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type $WardrobeItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "WardrobeItem"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
     outfitItems: Prisma.$OutfitItemPayload<ExtArgs>[]
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1753,8 +1753,8 @@ readonly fields: WardrobeItemFieldRefs;
  */
 export interface Prisma__WardrobeItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   outfitItems<T extends Prisma.WardrobeItem$outfitItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WardrobeItem$outfitItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OutfitItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

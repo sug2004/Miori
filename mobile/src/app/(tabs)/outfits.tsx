@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 
 import { Image } from 'expo-image';
 import { router, useFocusEffect } from 'expo-router';
+import { DrawerButton } from '@/components/drawer-button';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { api } from '@/lib/api';
@@ -50,11 +51,6 @@ export default function OutfitsScreen() {
       // ignore
     }
   };
-
-  useEffect(() => {
-    loadSaved();
-    loadWardrobe();
-  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -104,9 +100,14 @@ export default function OutfitsScreen() {
 
   return (
     <Screen scroll>
-      <View className="px-5 pt-4 pb-2">
-        <Text className="font-display text-3xl font-semibold text-ink">Outfit Studio</Text>
-        <Text className="mt-1 text-sm text-muted">Suggest outfits from your wardrobe</Text>
+      <View className="flex-row items-center justify-between px-5 pt-4 pb-2">
+        <View className="flex-row items-center gap-4">
+          <DrawerButton />
+          <View>
+            <Text className="font-display text-3xl font-semibold text-ink">Outfit Studio</Text>
+            <Text className="mt-0.5 text-sm text-muted">Suggest outfits from your wardrobe</Text>
+          </View>
+        </View>
       </View>
 
       <View className="px-5 mt-4 flex-row gap-2">
@@ -150,7 +151,7 @@ export default function OutfitsScreen() {
           <View className="px-5 mt-6 gap-4">
             {loading ? (
               <View className="items-center py-8">
-                <ActivityIndicator color="#F97316" />
+                <ActivityIndicator color="#E3C6A6" />
               </View>
             ) : null}
             {outfits.map((outfit, idx) => {
@@ -211,7 +212,7 @@ export default function OutfitsScreen() {
                     setSavingId(null);
                   }
                 }} disabled={savingId === (outfit.id || `gen_${idx}`)} className={`flex-1 rounded-full border border-accent px-4 py-2 items-center ${savingId === (outfit.id || `gen_${idx}`) ? 'bg-accent-soft opacity-70' : 'bg-accent-soft'}`}>
-                  {savingId === (outfit.id || `gen_${idx}`) ? <ActivityIndicator color="#F97316" /> : <Text className="text-sm font-semibold text-accent">Save</Text>}
+                  {savingId === (outfit.id || `gen_${idx}`) ? <ActivityIndicator color="#E3C6A6" /> : <Text className="text-sm font-semibold text-accent">Save</Text>}
                 </Pressable>
               </View>
                 </View>
@@ -226,7 +227,7 @@ export default function OutfitsScreen() {
         <View className="px-5 mt-4 gap-4">
           {loadingSaved ? (
             <View className="items-center py-8">
-              <ActivityIndicator color="#F97316" />
+              <ActivityIndicator color="#E3C6A6" />
             </View>
           ) : null}
           {saved.map((outfit: any, idx) => {

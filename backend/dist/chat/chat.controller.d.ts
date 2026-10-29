@@ -7,10 +7,10 @@ export declare class ChatController {
     constructor(chatService: ChatService);
     getConversation(user: AuthUser): Promise<{
         id: string;
-        userId: string;
-        title: string | null;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
+        title: string | null;
     }>;
     getMessages(user: AuthUser, id: string): Promise<{
         id: string;
@@ -48,10 +48,10 @@ export declare class ChatController {
         }[];
     } & {
         id: string;
-        userId: string;
-        title: string | null;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
+        title: string | null;
     })[]>;
 }
 export {};

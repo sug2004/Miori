@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ComponentRef, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -12,6 +12,7 @@ import {
 
 import { Image } from 'expo-image';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { DrawerButton } from '@/components/drawer-button';
 import { api } from '@/lib/api';
 
 type Msg = { id: string; role: string; content: any; createdAt: string };
@@ -23,7 +24,7 @@ export default function ChatScreen() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(false);
-  const scrollRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<ComponentRef<typeof ScrollView>>(null);
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
@@ -70,9 +71,12 @@ export default function ChatScreen() {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
       >
         {/* Header */}
-        <View className="px-5 pt-3 pb-2">
-          <Text className="font-display text-2xl font-semibold text-ink">Mio</Text>
-          <Text className="mt-0.5 text-sm text-muted">Your anime stylist waifu ✨</Text>
+        <View className="flex-row items-center justify-between px-5 pt-3 pb-2">
+          <DrawerButton />
+          <View className="flex-1 ml-4">
+            <Text className="font-display text-2xl font-semibold text-ink">Mio</Text>
+            <Text className="mt-0.5 text-sm text-muted">Your anime stylist waifu ✨</Text>
+          </View>
         </View>
 
         {/* Messages */}
@@ -85,7 +89,7 @@ export default function ChatScreen() {
         >
           {loading && (
             <View className="items-center py-8">
-              <ActivityIndicator color="#F97316" />
+              <ActivityIndicator color="#E3C6A6" />
             </View>
           )}
 
@@ -148,7 +152,7 @@ export default function ChatScreen() {
                 <Image source={{ uri: MIO_AVATAR }} style={{ width: '100%', height: '100%' }} />
               </View>
               <View className="rounded-2xl rounded-bl-md bg-surface border border-line px-4 py-3">
-                <ActivityIndicator color="#F97316" size="small" />
+                <ActivityIndicator color="#E3C6A6" size="small" />
               </View>
             </View>
           )}

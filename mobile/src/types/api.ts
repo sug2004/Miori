@@ -4,6 +4,7 @@ export interface PublicUser {
   displayName: string | null;
   avatarUrl: string | null;
   bio: string | null;
+  gender: string | null;
   createdAt: string;
 }
 

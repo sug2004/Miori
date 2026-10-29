@@ -11,6 +11,7 @@ export declare class ProfileService {
             displayName: string | null;
             avatarUrl: string | null;
             bio: string | null;
+            gender: string | null;
             createdAt: Date;
         };
         wardrobeItemCount: number;
@@ -31,6 +32,7 @@ export declare class ProfileService {
             displayName: string | null;
             avatarUrl: string | null;
             bio: string | null;
+            gender: string | null;
             createdAt: Date;
         };
     }>;
@@ -41,6 +43,7 @@ export declare class ProfileService {
             displayName: string | null;
             avatarUrl: string | null;
             bio: string | null;
+            gender: string | null;
             createdAt: Date;
         };
     }>;

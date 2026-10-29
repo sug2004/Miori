@@ -54,7 +54,7 @@ export function WardrobeFilters({
           onChangeText={onSearchChange}
           placeholder="Search your wardrobe..."
           placeholderTextColor="#6B665D"
-          selectionColor="#F97316"
+          selectionColor="#E3C6A6"
           autoCorrect={false}
           className="flex-1 py-3 text-base text-ink"
         />

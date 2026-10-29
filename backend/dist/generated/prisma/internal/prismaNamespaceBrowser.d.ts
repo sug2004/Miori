@@ -46,6 +46,7 @@ export declare const UserProfileScalarFieldEnum: {
     readonly bio: "bio";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
+    readonly gender: "gender";
 };
 export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum];
 export declare const StylePreferencesScalarFieldEnum: {

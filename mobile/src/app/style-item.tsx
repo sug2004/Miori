@@ -62,7 +62,7 @@ export default function StyleItemScreen() {
       <View className="px-5 mt-4 gap-4">
         {loading ? (
           <View className="items-center py-8">
-            <ActivityIndicator color="#F97316" />
+            <ActivityIndicator color="#E3C6A6" />
           </View>
         ) : null}
         {error ? <Text className="text-sm text-danger">{error}</Text> : null}

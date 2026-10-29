@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
 
+import { DrawerButton } from '@/components/drawer-button';
 import { Screen } from '@/components/screen';
 import { useAuth } from '@/state/auth';
 
@@ -33,11 +34,14 @@ export default function SettingsScreen() {
   return (
     <Screen scroll>
       {/* Header */}
-      <View className="flex-row items-center gap-3 px-5 pt-4 pb-2">
-        <Pressable onPress={() => router.back()} hitSlop={8}>
-          <Text className="text-xl text-ink">‹</Text>
-        </Pressable>
-        <Text className="font-display text-2xl font-semibold text-ink">Settings</Text>
+      <View className="flex-row items-center justify-between px-5 pt-4 pb-2">
+        <View className="flex-row items-center gap-3">
+          <Pressable onPress={() => router.back()} hitSlop={8}>
+            <Text className="text-xl text-ink px-1.5">‹</Text>
+          </Pressable>
+          <Text className="font-display text-2xl font-semibold text-ink">Settings</Text>
+        </View>
+        <DrawerButton />
       </View>
 
       <View className="px-5 pt-4">

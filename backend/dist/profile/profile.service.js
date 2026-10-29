@@ -53,6 +53,7 @@ let ProfileService = class ProfileService {
             displayName: dto.displayName,
             avatarUrl: dto.avatarUrl,
             bio: dto.bio,
+            gender: dto.gender,
         };
         await this.prisma.userProfile.upsert({
             where: { userId },
@@ -120,6 +121,7 @@ let ProfileService = class ProfileService {
             displayName: user.profile?.displayName ?? null,
             avatarUrl: user.profile?.avatarUrl ?? null,
             bio: user.profile?.bio ?? null,
+            gender: user.profile?.gender ?? null,
             createdAt: user.createdAt,
         };
     }

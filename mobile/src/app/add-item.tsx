@@ -4,6 +4,8 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 
+import { DrawerButton } from '@/components/drawer-button';
+import { CameraIcon, GalleryIcon, PencilIcon } from '@/components/icons';
 import { FormField } from '@/components/form-field';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
@@ -127,65 +129,50 @@ export default function AddItemScreen() {
 
   return (
     <Screen scroll>
-      <View className="flex-row items-center gap-3 px-5 pt-4 pb-2">
+      <View className="flex-row items-center px-5 pt-4 pb-2">
         <Pressable onPress={() => router.back()} hitSlop={8}>
-          <Text className="text-xl text-ink">‹</Text>
+          <Text className="text-xl text-ink px-1.5">‹</Text>
         </Pressable>
-        <Text className="font-display text-2xl font-semibold text-ink">
+        <Text className="flex-1 -ml-4 text-center font-display text-2xl font-semibold text-ink">
           {step === 'choose' ? 'Add Clothing Item' : 'Add to Wardrobe'}
         </Text>
+        <DrawerButton />
       </View>
 
       {step === 'choose' ? (
-        <View className="gap-4 px-5 pt-5">
-          <Text className="text-base text-muted">
-            Snap a photo and AI will suggest a name, type, and color. You can edit before saving.
-          </Text>
-
-          <Pressable
-            onPress={() => pickPhoto(true)}
-            disabled={busy !== null}
-            className="flex-row items-center gap-4 rounded-2xl border border-line bg-surface p-5 active:bg-surface-alt">
-            <Text className="text-3xl">📷</Text>
-            <View className="flex-1">
-              <Text className="font-display text-lg font-semibold text-ink">Take Photo</Text>
-              <Text className="text-sm text-muted">Use your camera</Text>
-            </View>
-            <Text className="text-muted">›</Text>
-          </Pressable>
-
-          <Pressable
-            onPress={() => pickPhoto(false)}
-            disabled={busy !== null}
-            className="flex-row items-center gap-4 rounded-2xl border border-line bg-surface p-5 active:bg-surface-alt">
-            <Text className="text-3xl">🖼</Text>
-            <View className="flex-1">
-              <Text className="font-display text-lg font-semibold text-ink">Choose from Gallery</Text>
-              <Text className="text-sm text-muted">Pick a photo</Text>
-            </View>
-            <Text className="text-muted">›</Text>
-          </Pressable>
-
-          <Pressable
-            onPress={startManual}
-            disabled={busy !== null}
-            className="flex-row items-center gap-4 rounded-2xl border border-line bg-surface p-5 active:bg-surface-alt">
-            <Text className="text-3xl">✍️</Text>
-            <View className="flex-1">
-              <Text className="font-display text-lg font-semibold text-ink">Add Manually</Text>
-              <Text className="text-sm text-muted">Enter name, type, and color</Text>
-            </View>
-            <Text className="text-muted">›</Text>
-          </Pressable>
+        <View className="px-6 pt-10">
+          {(
+            [
+              { Icon: CameraIcon, label: 'Take Photo', onPress: () => pickPhoto(true), disabled: busy !== null },
+              { Icon: GalleryIcon, label: 'Choose from Gallery', onPress: () => pickPhoto(false), disabled: busy !== null },
+              { Icon: PencilIcon, label: 'Add Details Manually', onPress: startManual, disabled: busy !== null },
+            ] as const
+          ).map(({ Icon, label, onPress, disabled }) => (
+            <Pressable
+              key={label}
+              onPress={onPress}
+              disabled={disabled}
+              className="mb-5 flex-row items-center rounded-2xl border border-line bg-surface/70 px-4 py-4 active:bg-surface-alt">
+              <View className="h-11 w-11 items-center justify-center rounded-xl bg-surface-alt">
+                <Icon />
+              </View>
+              <Text className="flex-1 pl-4 text-center text-[15px] text-ink">{label}</Text>
+              <View className="w-11" />
+            </Pressable>
+          ))}
 
           {busy === 'upload' ? (
-            <View className="items-center gap-2 rounded-2xl border border-accent/40 bg-accent-soft p-5">
-              <ActivityIndicator color="#F97316" />
+            <View className="mt-2 items-center gap-2 rounded-2xl border border-accent/40 bg-accent-soft p-5">
+              <ActivityIndicator color="#E3C6A6" />
               <Text className="text-sm text-accent">Analyzing image and getting suggestions…</Text>
             </View>
           ) : null}
 
-          {error ? <Text className="text-sm text-danger">{error}</Text> : null}
+          {error ? <Text className="mt-2 text-center text-sm text-danger">{error}</Text> : null}
+
+          <Text className="mt-24 text-center text-sm leading-6 text-muted">
+            AI will automatically detect{'\n'}the type, color and style.
+          </Text>
         </View>
       ) : (
         <View className="gap-4 px-5 pt-4">
@@ -206,7 +193,7 @@ export default function AddItemScreen() {
 
           {busy === 'upload' ? (
             <View className="items-center gap-2 rounded-2xl border border-accent/40 bg-accent-soft p-4">
-              <ActivityIndicator color="#F97316" />
+              <ActivityIndicator color="#E3C6A6" />
               <Text className="text-sm text-accent">Filling details from photo…</Text>
             </View>
           ) : null}

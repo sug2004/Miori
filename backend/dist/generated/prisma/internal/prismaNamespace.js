@@ -55,7 +55,8 @@ export const UserProfileScalarFieldEnum = {
     avatarUrl: 'avatarUrl',
     bio: 'bio',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    gender: 'gender'
 };
 export const StylePreferencesScalarFieldEnum = {
     id: 'id',

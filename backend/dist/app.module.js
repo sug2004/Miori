@@ -16,6 +16,7 @@ import { AiModule } from './ai/ai.module.js';
 import { UploadsModule } from './uploads/uploads.module.js';
 import { OutfitModule } from './outfit/outfit.module.js';
 import { ChatModule } from './chat/chat.module.js';
+import { InspirationModule } from './inspiration/inspiration.module.js';
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -30,6 +31,7 @@ AppModule = __decorate([
             UploadsModule,
             OutfitModule,
             ChatModule,
+            InspirationModule,
         ],
         controllers: [AppController],
         providers: [AppService],

@@ -2,6 +2,7 @@ import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
+import { DrawerButton } from '@/components/drawer-button';
 import { Screen } from '@/components/screen';
 import { UserAvatar } from '@/components/user-avatar';
 import { api } from '@/lib/api';
@@ -72,7 +73,10 @@ export default function ProfileScreen() {
     <Screen scroll>
       {/* Header */}
       <View className="flex-row items-center justify-between px-5 pt-4 pb-2">
-        <Text className="font-display text-2xl font-semibold text-ink">My Profile</Text>
+        <View className="flex-row items-center gap-4">
+          <DrawerButton />
+          <Text className="font-display text-2xl font-semibold text-ink">My Profile</Text>
+        </View>
         <Pressable onPress={() => router.push('/settings' as never)} hitSlop={8}>
           <Text className="text-xl text-ink">⚙</Text>
         </Pressable>

@@ -3,41 +3,38 @@ import { ActivityIndicator, Alert, Pressable, ScrollView, Text, TextInput, View 
 
 import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
-import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { api } from '@/lib/api';
 import type { Outfit, WardrobeItem } from '@/types/api';
 
 export default function OutfitCustomizeScreen() {
   const params = useLocalSearchParams<{ outfit: string }>();
-  const [outfit, setOutfit] = useState<Outfit | null>(null);
+  const initial = (() => {
+    try {
+      return params.outfit ? (JSON.parse(params.outfit) as Outfit) : null;
+    } catch {
+      return null;
+    }
+  })();
   const [wardrobe, setWardrobe] = useState<WardrobeItem[]>([]);
-  const [items, setItems] = useState<any[]>([]);
-  const [title, setTitle] = useState('');
-  const [notes, setNotes] = useState('');
-  const [occasion, setOccasion] = useState('');
+  const [items, setItems] = useState<any[]>(() => (initial ? initial.items || initial.outfitItems || [] : []));
+  const [title, setTitle] = useState(initial?.title ?? '');
+  const [notes, setNotes] = useState(initial?.reason ?? '');
+  const [occasion, setOccasion] = useState(initial?.occasion ?? '');
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (params.outfit) {
+    let active = true;
+    (async () => {
       try {
-        const parsed = JSON.parse(params.outfit);
-        setOutfit(parsed);
-        setItems(parsed.items || parsed.outfitItems || []);
-        setTitle(parsed.title || '');
-        setNotes(parsed.reason || '');
-        setOccasion(parsed.occasion || '');
+        const res = await api.get<any>('/wardrobe');
+        if (active) setWardrobe(Array.isArray(res) ? res : res.items || []);
       } catch {}
-    }
-    loadWardrobe();
-  }, [params.outfit]);
-
-  const loadWardrobe = async () => {
-    try {
-      const res = await api.get<any>('/wardrobe');
-      setWardrobe(Array.isArray(res) ? res : res.items || []);
-    } catch {}
-  };
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const replaceItem = (index: number, newItem: WardrobeItem) => {
     const next = [...items];

@@ -2,6 +2,7 @@ import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 
+import { DrawerButton } from '@/components/drawer-button';
 import { PrimaryButton } from '@/components/primary-button';
 import { Screen } from '@/components/screen';
 import { WardrobeFilters } from '@/components/wardrobe-filters';
@@ -75,11 +76,14 @@ export default function WardrobeScreen() {
   return (
     <Screen scroll>
       <View className="flex-row items-center justify-between px-5 pt-4 pb-3">
-        <View>
-          <Text className="font-display text-2xl font-semibold text-ink">My Wardrobe</Text>
-          <Text className="text-sm text-muted">
-            {items.length} {items.length === 1 ? 'piece' : 'pieces'}
-          </Text>
+        <View className="flex-row items-center gap-4">
+          <DrawerButton />
+          <View>
+            <Text className="font-display text-2xl font-semibold text-ink">My Wardrobe</Text>
+            <Text className="text-sm text-muted">
+              {items.length} {items.length === 1 ? 'piece' : 'pieces'}
+            </Text>
+          </View>
         </View>
         <View className="flex-row items-center gap-2">
           <Pressable
@@ -121,7 +125,7 @@ export default function WardrobeScreen() {
 
         {loading ? (
           <View className="items-center gap-3 py-16">
-            <ActivityIndicator color="#F97316" />
+            <ActivityIndicator color="#E3C6A6" />
             <Text className="text-sm text-muted">Loading wardrobe…</Text>
           </View>
         ) : items.length === 0 ? (

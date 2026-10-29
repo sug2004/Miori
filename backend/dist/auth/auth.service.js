@@ -31,7 +31,7 @@ let AuthService = class AuthService {
                 email: dto.email,
                 passwordHash,
                 profile: {
-                    create: { displayName: dto.displayName },
+                    create: { displayName: dto.displayName, gender: dto.gender },
                 },
             },
             include: { profile: true },
@@ -74,6 +74,7 @@ let AuthService = class AuthService {
             displayName: user.profile?.displayName ?? null,
             avatarUrl: user.profile?.avatarUrl ?? null,
             bio: user.profile?.bio ?? null,
+            gender: user.profile?.gender ?? null,
             createdAt: user.createdAt,
         };
     }

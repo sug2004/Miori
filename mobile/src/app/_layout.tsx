@@ -1,7 +1,7 @@
 import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { Platform, View } from 'react-native';
+import { View } from 'react-native';
 
 import { DrawerMenu } from '@/components/drawer-menu';
 import { AuthProvider, useAuth } from '@/state/auth';
@@ -29,6 +29,7 @@ function RootNavigator() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Protected guard={!user}>
+          <Stack.Screen name="onboarding" />
           <Stack.Screen name="sign-in" />
           <Stack.Screen name="sign-up" />
         </Stack.Protected>
@@ -38,6 +39,7 @@ function RootNavigator() {
           <Stack.Screen name="edit-profile" />
           <Stack.Screen name="settings" />
           <Stack.Screen name="add-item" />
+          <Stack.Screen name="inspiration" />
           <Stack.Screen name="item/[id]" />
         </Stack.Protected>
       </Stack>

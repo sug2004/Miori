@@ -14,6 +14,7 @@ export declare class AuthService {
             displayName: string | null;
             avatarUrl: string | null;
             bio: string | null;
+            gender: string | null;
             createdAt: Date;
         };
     }>;
@@ -25,6 +26,7 @@ export declare class AuthService {
             displayName: string | null;
             avatarUrl: string | null;
             bio: string | null;
+            gender: string | null;
             createdAt: Date;
         };
     }>;
@@ -35,6 +37,7 @@ export declare class AuthService {
             displayName: string | null;
             avatarUrl: string | null;
             bio: string | null;
+            gender: string | null;
             createdAt: Date;
         };
     }>;

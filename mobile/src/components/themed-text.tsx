@@ -8,7 +8,7 @@ export type ThemedTextProps = TextProps & {
 const COLORS: Record<string, string> = {
   text: '#EDE8DF',
   textSecondary: '#A49C90',
-  accent: '#F97316',
+  accent: '#E3C6A6',
   muted: '#A49C90',
 };
 

@@ -13,4 +13,8 @@ export class SignupDto {
   @IsString()
   @MaxLength(50)
   displayName?: string;
+
+  @IsOptional()
+  @IsString()
+  gender?: string;
 }

@@ -12,6 +12,7 @@ export class UpdateProfileDto {
     displayName;
     avatarUrl;
     bio;
+    gender;
 }
 __decorate([
     IsOptional(),
@@ -31,4 +32,9 @@ __decorate([
     MaxLength(1000),
     __metadata("design:type", String)
 ], UpdateProfileDto.prototype, "bio", void 0);
+__decorate([
+    IsOptional(),
+    IsString(),
+    __metadata("design:type", String)
+], UpdateProfileDto.prototype, "gender", void 0);
 //# sourceMappingURL=update-profile.dto.js.map

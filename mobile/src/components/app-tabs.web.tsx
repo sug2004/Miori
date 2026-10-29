@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
   Tabs,
   TabList,
@@ -33,9 +34,14 @@ export default function AppTabs() {
   );
 }
 
-function TabButton({ children, isFocused, ...props }: TabTriggerSlotProps) {
+function TabButton({ children, isFocused, style, ...props }: TabTriggerSlotProps & { children?: ReactNode; style?: unknown }) {
+  const merged = ({ pressed }: { pressed: boolean }) =>
+    ([
+      styles.btn,
+      typeof style === 'function' ? (style as (p: { pressed: boolean }) => unknown)({ pressed }) : undefined,
+    ] as unknown) as never;
   return (
-    <Pressable {...props} style={({ pressed }) => [styles.btn, pressed && styles.pressed]}>
+    <Pressable style={merged} {...(props as Record<string, never>)}>
       <ThemedText
         type="smallBold"
         themeColor={isFocused ? 'accent' : 'muted'}>

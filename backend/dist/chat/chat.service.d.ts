@@ -7,10 +7,10 @@ export declare class ChatService {
     constructor(prisma: PrismaService, ai: AiService);
     getOrCreateConversation(userId: string): Promise<{
         id: string;
-        userId: string;
-        title: string | null;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
+        title: string | null;
     }>;
     getMessages(userId: string, conversationId: string): Promise<{
         id: string;
@@ -48,9 +48,9 @@ export declare class ChatService {
         }[];
     } & {
         id: string;
-        userId: string;
-        title: string | null;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
+        title: string | null;
     })[]>;
 }

@@ -18,7 +18,7 @@ export declare class OutfitService {
                 updatedAt: Date;
                 userId: string;
                 styleTags: import("@prisma/client/runtime/client").JsonValue | null;
-                status: import("../generated/prisma/enums.js").ItemStatus;
+                imageUrl: string;
                 category: string;
                 subcategory: string | null;
                 color: string | null;
@@ -28,20 +28,20 @@ export declare class OutfitService {
                 fit: string | null;
                 formality: string | null;
                 season: string | null;
-                imageUrl: string;
                 brand: string | null;
                 purchaseDate: Date | null;
                 price: import("@prisma/client-runtime-utils").Decimal | null;
                 favorite: boolean;
-                notes: string | null;
-                source: string;
                 wearCount: number;
+                notes: string | null;
+                status: import("../generated/prisma/enums.js").ItemStatus;
+                source: string;
             };
         } & {
             id: string;
-            position: number;
-            wardrobeItemId: string;
             outfitId: string;
+            wardrobeItemId: string;
+            position: number;
         })[];
     } & {
         id: string;
@@ -61,7 +61,7 @@ export declare class OutfitService {
                 updatedAt: Date;
                 userId: string;
                 styleTags: import("@prisma/client/runtime/client").JsonValue | null;
-                status: import("../generated/prisma/enums.js").ItemStatus;
+                imageUrl: string;
                 category: string;
                 subcategory: string | null;
                 color: string | null;
@@ -71,20 +71,20 @@ export declare class OutfitService {
                 fit: string | null;
                 formality: string | null;
                 season: string | null;
-                imageUrl: string;
                 brand: string | null;
                 purchaseDate: Date | null;
                 price: import("@prisma/client-runtime-utils").Decimal | null;
                 favorite: boolean;
-                notes: string | null;
-                source: string;
                 wearCount: number;
+                notes: string | null;
+                status: import("../generated/prisma/enums.js").ItemStatus;
+                source: string;
             };
         } & {
             id: string;
-            position: number;
-            wardrobeItemId: string;
             outfitId: string;
+            wardrobeItemId: string;
+            position: number;
         })[];
     } & {
         id: string;
@@ -104,7 +104,7 @@ export declare class OutfitService {
                 updatedAt: Date;
                 userId: string;
                 styleTags: import("@prisma/client/runtime/client").JsonValue | null;
-                status: import("../generated/prisma/enums.js").ItemStatus;
+                imageUrl: string;
                 category: string;
                 subcategory: string | null;
                 color: string | null;
@@ -114,20 +114,20 @@ export declare class OutfitService {
                 fit: string | null;
                 formality: string | null;
                 season: string | null;
-                imageUrl: string;
                 brand: string | null;
                 purchaseDate: Date | null;
                 price: import("@prisma/client-runtime-utils").Decimal | null;
                 favorite: boolean;
-                notes: string | null;
-                source: string;
                 wearCount: number;
+                notes: string | null;
+                status: import("../generated/prisma/enums.js").ItemStatus;
+                source: string;
             };
         } & {
             id: string;
-            position: number;
-            wardrobeItemId: string;
             outfitId: string;
+            wardrobeItemId: string;
+            position: number;
         })[];
     } & {
         id: string;
@@ -147,7 +147,7 @@ export declare class OutfitService {
                 updatedAt: Date;
                 userId: string;
                 styleTags: import("@prisma/client/runtime/client").JsonValue | null;
-                status: import("../generated/prisma/enums.js").ItemStatus;
+                imageUrl: string;
                 category: string;
                 subcategory: string | null;
                 color: string | null;
@@ -157,20 +157,20 @@ export declare class OutfitService {
                 fit: string | null;
                 formality: string | null;
                 season: string | null;
-                imageUrl: string;
                 brand: string | null;
                 purchaseDate: Date | null;
                 price: import("@prisma/client-runtime-utils").Decimal | null;
                 favorite: boolean;
-                notes: string | null;
-                source: string;
                 wearCount: number;
+                notes: string | null;
+                status: import("../generated/prisma/enums.js").ItemStatus;
+                source: string;
             };
         } & {
             id: string;
-            position: number;
-            wardrobeItemId: string;
             outfitId: string;
+            wardrobeItemId: string;
+            position: number;
         })[];
     } & {
         id: string;

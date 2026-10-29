@@ -1,5 +1,5 @@
 import { Link, router } from 'expo-router';
-import { useRef, useState } from 'react';
+import { ComponentRef, useRef, useState } from 'react';
 import { Text, TextInput } from 'react-native';
 
 import { AuthLayout } from '@/components/auth-layout';
@@ -13,7 +13,7 @@ export default function SignInScreen() {
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const passwordRef = useRef<TextInput>(null);
+  const passwordRef = useRef<ComponentRef<typeof TextInput>>(null);
 
   const canSubmit = email.trim().length > 0 && password.length > 0 && !submitting;
 
@@ -34,7 +34,7 @@ export default function SignInScreen() {
   return (
     <AuthLayout
       title="Welcome back"
-      subtitle="Log in to your wardrobe."
+      subtitle="Good to see you again."
       footer={
         <>
           <Text className="text-sm text-muted">New here?</Text>

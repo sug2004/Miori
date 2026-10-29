@@ -12,6 +12,7 @@ export class SignupDto {
     email;
     password;
     displayName;
+    gender;
 }
 __decorate([
     IsEmail(),
@@ -29,4 +30,9 @@ __decorate([
     MaxLength(50),
     __metadata("design:type", String)
 ], SignupDto.prototype, "displayName", void 0);
+__decorate([
+    IsOptional(),
+    IsString(),
+    __metadata("design:type", String)
+], SignupDto.prototype, "gender", void 0);
 //# sourceMappingURL=signup.dto.js.map

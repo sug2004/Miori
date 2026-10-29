@@ -257,8 +257,8 @@ export type WardrobeItemWhereInput = {
     source?: Prisma.StringFilter<"WardrobeItem"> | string;
     createdAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string;
-    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     outfitItems?: Prisma.OutfitItemListRelationFilter;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 };
 export type WardrobeItemOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -284,8 +284,8 @@ export type WardrobeItemOrderByWithRelationInput = {
     source?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
-    user?: Prisma.UserOrderByWithRelationInput;
     outfitItems?: Prisma.OutfitItemOrderByRelationAggregateInput;
+    user?: Prisma.UserOrderByWithRelationInput;
 };
 export type WardrobeItemWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -314,8 +314,8 @@ export type WardrobeItemWhereUniqueInput = Prisma.AtLeast<{
     source?: Prisma.StringFilter<"WardrobeItem"> | string;
     createdAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string;
-    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     outfitItems?: Prisma.OutfitItemListRelationFilter;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 }, "id">;
 export type WardrobeItemOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -398,8 +398,8 @@ export type WardrobeItemCreateInput = {
     source?: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    user: Prisma.UserCreateNestedOneWithoutWardrobeItemsInput;
     outfitItems?: Prisma.OutfitItemCreateNestedManyWithoutWardrobeItemInput;
+    user: Prisma.UserCreateNestedOneWithoutWardrobeItemsInput;
 };
 export type WardrobeItemUncheckedCreateInput = {
     id?: string;
@@ -450,8 +450,8 @@ export type WardrobeItemUpdateInput = {
     source?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    user?: Prisma.UserUpdateOneRequiredWithoutWardrobeItemsNestedInput;
     outfitItems?: Prisma.OutfitItemUpdateManyWithoutWardrobeItemNestedInput;
+    user?: Prisma.UserUpdateOneRequiredWithoutWardrobeItemsNestedInput;
 };
 export type WardrobeItemUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -1063,8 +1063,8 @@ export type WardrobeItemSelect<ExtArgs extends runtime.Types.Extensions.Internal
     source?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     outfitItems?: boolean | Prisma.WardrobeItem$outfitItemsArgs<ExtArgs>;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     _count?: boolean | Prisma.WardrobeItemCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["wardrobeItem"]>;
 export type WardrobeItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1146,8 +1146,8 @@ export type WardrobeItemSelectScalar = {
 };
 export type WardrobeItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "imageUrl" | "category" | "subcategory" | "color" | "secondaryColors" | "pattern" | "material" | "fit" | "styleTags" | "formality" | "season" | "brand" | "purchaseDate" | "price" | "favorite" | "wearCount" | "notes" | "status" | "source" | "createdAt" | "updatedAt", ExtArgs["result"]["wardrobeItem"]>;
 export type WardrobeItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     outfitItems?: boolean | Prisma.WardrobeItem$outfitItemsArgs<ExtArgs>;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     _count?: boolean | Prisma.WardrobeItemCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type WardrobeItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1159,8 +1159,8 @@ export type WardrobeItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type $WardrobeItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "WardrobeItem";
     objects: {
-        user: Prisma.$UserPayload<ExtArgs>;
         outfitItems: Prisma.$OutfitItemPayload<ExtArgs>[];
+        user: Prisma.$UserPayload<ExtArgs>;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -1238,8 +1238,8 @@ export interface WardrobeItemDelegate<ExtArgs extends runtime.Types.Extensions.I
 }
 export interface Prisma__WardrobeItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     outfitItems<T extends Prisma.WardrobeItem$outfitItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WardrobeItem$outfitItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OutfitItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
     catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
     finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;

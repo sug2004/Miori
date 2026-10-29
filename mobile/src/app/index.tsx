@@ -10,5 +10,5 @@ export default function IndexScreen() {
     return <View className="flex-1 bg-background" />;
   }
 
-  return <Redirect href={user ? '/(tabs)' : '/sign-in'} />;
+  return <Redirect href={(user ? '/(tabs)' : '/onboarding') as never} />;
 }

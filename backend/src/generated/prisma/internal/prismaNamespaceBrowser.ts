@@ -97,7 +97,8 @@ export const UserProfileScalarFieldEnum = {
   avatarUrl: 'avatarUrl',
   bio: 'bio',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  gender: 'gender'
 } as const
 
 export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]

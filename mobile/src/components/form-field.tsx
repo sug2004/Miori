@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { ComponentRef, forwardRef, useState } from 'react';
 import { Text, TextInput, TextInputProps, View } from 'react-native';
 
 interface FormFieldProps extends Omit<TextInputProps, 'value' | 'onChangeText'> {
@@ -7,7 +7,7 @@ interface FormFieldProps extends Omit<TextInputProps, 'value' | 'onChangeText'> 
   onChangeText: (text: string) => void;
 }
 
-export const FormField = forwardRef<TextInput, FormFieldProps>(function FormField(
+export const FormField = forwardRef<ComponentRef<typeof TextInput>, FormFieldProps>(function FormField(
   { label, value, onChangeText, placeholder, ...rest },
   ref,
 ) {
@@ -22,7 +22,7 @@ export const FormField = forwardRef<TextInput, FormFieldProps>(function FormFiel
         onChangeText={onChangeText}
         placeholder={placeholder}
         placeholderTextColor="#6B665D"
-        selectionColor="#F97316"
+        selectionColor="#E3C6A6"
         autoCorrect={false}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}

@@ -96,12 +96,12 @@ export type UserWhereInput = {
     passwordHash?: Prisma.StringFilter<"User"> | string;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
-    profile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null;
-    stylePreferences?: Prisma.XOR<Prisma.StylePreferencesNullableScalarRelationFilter, Prisma.StylePreferencesWhereInput> | null;
-    wardrobeItems?: Prisma.WardrobeItemListRelationFilter;
-    outfits?: Prisma.OutfitListRelationFilter;
     conversations?: Prisma.ConversationListRelationFilter;
+    outfits?: Prisma.OutfitListRelationFilter;
     shoppingRecommendations?: Prisma.ShoppingRecommendationListRelationFilter;
+    stylePreferences?: Prisma.XOR<Prisma.StylePreferencesNullableScalarRelationFilter, Prisma.StylePreferencesWhereInput> | null;
+    profile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null;
+    wardrobeItems?: Prisma.WardrobeItemListRelationFilter;
 };
 export type UserOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -109,12 +109,12 @@ export type UserOrderByWithRelationInput = {
     passwordHash?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
-    profile?: Prisma.UserProfileOrderByWithRelationInput;
-    stylePreferences?: Prisma.StylePreferencesOrderByWithRelationInput;
-    wardrobeItems?: Prisma.WardrobeItemOrderByRelationAggregateInput;
-    outfits?: Prisma.OutfitOrderByRelationAggregateInput;
     conversations?: Prisma.ConversationOrderByRelationAggregateInput;
+    outfits?: Prisma.OutfitOrderByRelationAggregateInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationOrderByRelationAggregateInput;
+    stylePreferences?: Prisma.StylePreferencesOrderByWithRelationInput;
+    profile?: Prisma.UserProfileOrderByWithRelationInput;
+    wardrobeItems?: Prisma.WardrobeItemOrderByRelationAggregateInput;
 };
 export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -125,12 +125,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     passwordHash?: Prisma.StringFilter<"User"> | string;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
-    profile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null;
-    stylePreferences?: Prisma.XOR<Prisma.StylePreferencesNullableScalarRelationFilter, Prisma.StylePreferencesWhereInput> | null;
-    wardrobeItems?: Prisma.WardrobeItemListRelationFilter;
-    outfits?: Prisma.OutfitListRelationFilter;
     conversations?: Prisma.ConversationListRelationFilter;
+    outfits?: Prisma.OutfitListRelationFilter;
     shoppingRecommendations?: Prisma.ShoppingRecommendationListRelationFilter;
+    stylePreferences?: Prisma.XOR<Prisma.StylePreferencesNullableScalarRelationFilter, Prisma.StylePreferencesWhereInput> | null;
+    profile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null;
+    wardrobeItems?: Prisma.WardrobeItemListRelationFilter;
 }, "id" | "email">;
 export type UserOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -158,12 +158,12 @@ export type UserCreateInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
-    wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
-    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
     conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
+    wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateInput = {
     id?: string;
@@ -171,12 +171,12 @@ export type UserUncheckedCreateInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
-    wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
-    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
     conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
+    wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -184,12 +184,12 @@ export type UserUpdateInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
-    wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
     conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
+    wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -197,12 +197,12 @@ export type UserUncheckedUpdateInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
-    wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
     conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
+    wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateManyInput = {
     id?: string;
@@ -334,11 +334,11 @@ export type UserCreateWithoutProfileInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
+    shoppingRecommendations?: Prisma.ShoppingRecommendationCreateNestedManyWithoutUserInput;
     stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
     wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
-    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
-    conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput;
-    shoppingRecommendations?: Prisma.ShoppingRecommendationCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutProfileInput = {
     id?: string;
@@ -346,11 +346,11 @@ export type UserUncheckedCreateWithoutProfileInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
+    shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedCreateNestedManyWithoutUserInput;
     stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
     wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
-    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
-    conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput;
-    shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutProfileInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -371,11 +371,11 @@ export type UserUpdateWithoutProfileInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
+    shoppingRecommendations?: Prisma.ShoppingRecommendationUpdateManyWithoutUserNestedInput;
     stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
     wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
-    conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput;
-    shoppingRecommendations?: Prisma.ShoppingRecommendationUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutProfileInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -383,11 +383,11 @@ export type UserUncheckedUpdateWithoutProfileInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
+    shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedUpdateManyWithoutUserNestedInput;
     stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
     wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
-    conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput;
-    shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutStylePreferencesInput = {
     id?: string;
@@ -395,11 +395,11 @@ export type UserCreateWithoutStylePreferencesInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
+    shoppingRecommendations?: Prisma.ShoppingRecommendationCreateNestedManyWithoutUserInput;
     profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
     wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
-    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
-    conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput;
-    shoppingRecommendations?: Prisma.ShoppingRecommendationCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutStylePreferencesInput = {
     id?: string;
@@ -407,11 +407,11 @@ export type UserUncheckedCreateWithoutStylePreferencesInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
+    shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedCreateNestedManyWithoutUserInput;
     profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
     wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
-    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
-    conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput;
-    shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutStylePreferencesInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -432,11 +432,11 @@ export type UserUpdateWithoutStylePreferencesInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
+    shoppingRecommendations?: Prisma.ShoppingRecommendationUpdateManyWithoutUserNestedInput;
     profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
     wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
-    conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput;
-    shoppingRecommendations?: Prisma.ShoppingRecommendationUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutStylePreferencesInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -444,11 +444,11 @@ export type UserUncheckedUpdateWithoutStylePreferencesInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
+    shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedUpdateManyWithoutUserNestedInput;
     profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
     wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
-    conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput;
-    shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutWardrobeItemsInput = {
     id?: string;
@@ -456,11 +456,11 @@ export type UserCreateWithoutWardrobeItemsInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
-    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
     conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutWardrobeItemsInput = {
     id?: string;
@@ -468,11 +468,11 @@ export type UserUncheckedCreateWithoutWardrobeItemsInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
-    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
     conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutWardrobeItemsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -493,11 +493,11 @@ export type UserUpdateWithoutWardrobeItemsInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
     conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutWardrobeItemsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -505,11 +505,11 @@ export type UserUncheckedUpdateWithoutWardrobeItemsInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
     conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
 };
 export type UserCreateWithoutOutfitsInput = {
     id?: string;
@@ -517,11 +517,11 @@ export type UserCreateWithoutOutfitsInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
-    wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
     conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
+    wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutOutfitsInput = {
     id?: string;
@@ -529,11 +529,11 @@ export type UserUncheckedCreateWithoutOutfitsInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
-    wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
     conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
+    wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutOutfitsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -554,11 +554,11 @@ export type UserUpdateWithoutOutfitsInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
-    wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
     conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
+    wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutOutfitsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -566,11 +566,11 @@ export type UserUncheckedUpdateWithoutOutfitsInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
-    wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
     conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
+    wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutConversationsInput = {
     id?: string;
@@ -578,11 +578,11 @@ export type UserCreateWithoutConversationsInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
-    wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
     outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
+    wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutConversationsInput = {
     id?: string;
@@ -590,11 +590,11 @@ export type UserUncheckedCreateWithoutConversationsInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
-    wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
     outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
+    wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutConversationsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -615,11 +615,11 @@ export type UserUpdateWithoutConversationsInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
-    wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
     outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
+    wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutConversationsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -627,11 +627,11 @@ export type UserUncheckedUpdateWithoutConversationsInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
-    wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
     outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
     shoppingRecommendations?: Prisma.ShoppingRecommendationUncheckedUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
+    wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCreateWithoutShoppingRecommendationsInput = {
     id?: string;
@@ -639,11 +639,11 @@ export type UserCreateWithoutShoppingRecommendationsInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
-    wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
-    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
     conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput;
+    wardrobeItems?: Prisma.WardrobeItemCreateNestedManyWithoutUserInput;
 };
 export type UserUncheckedCreateWithoutShoppingRecommendationsInput = {
     id?: string;
@@ -651,11 +651,11 @@ export type UserUncheckedCreateWithoutShoppingRecommendationsInput = {
     passwordHash: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
-    wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
-    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
     conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput;
+    outfits?: Prisma.OutfitUncheckedCreateNestedManyWithoutUserInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedCreateNestedOneWithoutUserInput;
+    profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput;
+    wardrobeItems?: Prisma.WardrobeItemUncheckedCreateNestedManyWithoutUserInput;
 };
 export type UserCreateOrConnectWithoutShoppingRecommendationsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -676,11 +676,11 @@ export type UserUpdateWithoutShoppingRecommendationsInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
-    wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
     conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput;
+    wardrobeItems?: Prisma.WardrobeItemUpdateManyWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateWithoutShoppingRecommendationsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -688,38 +688,38 @@ export type UserUncheckedUpdateWithoutShoppingRecommendationsInput = {
     passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
-    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
-    wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
-    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
     conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput;
+    outfits?: Prisma.OutfitUncheckedUpdateManyWithoutUserNestedInput;
+    stylePreferences?: Prisma.StylePreferencesUncheckedUpdateOneWithoutUserNestedInput;
+    profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput;
+    wardrobeItems?: Prisma.WardrobeItemUncheckedUpdateManyWithoutUserNestedInput;
 };
 export type UserCountOutputType = {
-    wardrobeItems: number;
-    outfits: number;
     conversations: number;
+    outfits: number;
     shoppingRecommendations: number;
+    wardrobeItems: number;
 };
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    wardrobeItems?: boolean | UserCountOutputTypeCountWardrobeItemsArgs;
-    outfits?: boolean | UserCountOutputTypeCountOutfitsArgs;
     conversations?: boolean | UserCountOutputTypeCountConversationsArgs;
+    outfits?: boolean | UserCountOutputTypeCountOutfitsArgs;
     shoppingRecommendations?: boolean | UserCountOutputTypeCountShoppingRecommendationsArgs;
+    wardrobeItems?: boolean | UserCountOutputTypeCountWardrobeItemsArgs;
 };
 export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null;
 };
-export type UserCountOutputTypeCountWardrobeItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    where?: Prisma.WardrobeItemWhereInput;
+export type UserCountOutputTypeCountConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ConversationWhereInput;
 };
 export type UserCountOutputTypeCountOutfitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.OutfitWhereInput;
 };
-export type UserCountOutputTypeCountConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    where?: Prisma.ConversationWhereInput;
-};
 export type UserCountOutputTypeCountShoppingRecommendationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.ShoppingRecommendationWhereInput;
+};
+export type UserCountOutputTypeCountWardrobeItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.WardrobeItemWhereInput;
 };
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -727,12 +727,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     passwordHash?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    profile?: boolean | Prisma.User$profileArgs<ExtArgs>;
-    stylePreferences?: boolean | Prisma.User$stylePreferencesArgs<ExtArgs>;
-    wardrobeItems?: boolean | Prisma.User$wardrobeItemsArgs<ExtArgs>;
-    outfits?: boolean | Prisma.User$outfitsArgs<ExtArgs>;
     conversations?: boolean | Prisma.User$conversationsArgs<ExtArgs>;
+    outfits?: boolean | Prisma.User$outfitsArgs<ExtArgs>;
     shoppingRecommendations?: boolean | Prisma.User$shoppingRecommendationsArgs<ExtArgs>;
+    stylePreferences?: boolean | Prisma.User$stylePreferencesArgs<ExtArgs>;
+    profile?: boolean | Prisma.User$profileArgs<ExtArgs>;
+    wardrobeItems?: boolean | Prisma.User$wardrobeItemsArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -758,12 +758,12 @@ export type UserSelectScalar = {
 };
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    profile?: boolean | Prisma.User$profileArgs<ExtArgs>;
-    stylePreferences?: boolean | Prisma.User$stylePreferencesArgs<ExtArgs>;
-    wardrobeItems?: boolean | Prisma.User$wardrobeItemsArgs<ExtArgs>;
-    outfits?: boolean | Prisma.User$outfitsArgs<ExtArgs>;
     conversations?: boolean | Prisma.User$conversationsArgs<ExtArgs>;
+    outfits?: boolean | Prisma.User$outfitsArgs<ExtArgs>;
     shoppingRecommendations?: boolean | Prisma.User$shoppingRecommendationsArgs<ExtArgs>;
+    stylePreferences?: boolean | Prisma.User$stylePreferencesArgs<ExtArgs>;
+    profile?: boolean | Prisma.User$profileArgs<ExtArgs>;
+    wardrobeItems?: boolean | Prisma.User$wardrobeItemsArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
@@ -771,12 +771,12 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "User";
     objects: {
-        profile: Prisma.$UserProfilePayload<ExtArgs> | null;
-        stylePreferences: Prisma.$StylePreferencesPayload<ExtArgs> | null;
-        wardrobeItems: Prisma.$WardrobeItemPayload<ExtArgs>[];
-        outfits: Prisma.$OutfitPayload<ExtArgs>[];
         conversations: Prisma.$ConversationPayload<ExtArgs>[];
+        outfits: Prisma.$OutfitPayload<ExtArgs>[];
         shoppingRecommendations: Prisma.$ShoppingRecommendationPayload<ExtArgs>[];
+        stylePreferences: Prisma.$StylePreferencesPayload<ExtArgs> | null;
+        profile: Prisma.$UserProfilePayload<ExtArgs> | null;
+        wardrobeItems: Prisma.$WardrobeItemPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -836,12 +836,12 @@ export interface UserDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    profile<T extends Prisma.User$profileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$profileArgs<ExtArgs>>): Prisma.Prisma__UserProfileClient<runtime.Types.Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
-    stylePreferences<T extends Prisma.User$stylePreferencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$stylePreferencesArgs<ExtArgs>>): Prisma.Prisma__StylePreferencesClient<runtime.Types.Result.GetResult<Prisma.$StylePreferencesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
-    wardrobeItems<T extends Prisma.User$wardrobeItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$wardrobeItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WardrobeItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
-    outfits<T extends Prisma.User$outfitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$outfitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OutfitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     conversations<T extends Prisma.User$conversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    outfits<T extends Prisma.User$outfitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$outfitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OutfitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     shoppingRecommendations<T extends Prisma.User$shoppingRecommendationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$shoppingRecommendationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShoppingRecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    stylePreferences<T extends Prisma.User$stylePreferencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$stylePreferencesArgs<ExtArgs>>): Prisma.Prisma__StylePreferencesClient<runtime.Types.Result.GetResult<Prisma.$StylePreferencesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    profile<T extends Prisma.User$profileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$profileArgs<ExtArgs>>): Prisma.Prisma__UserProfileClient<runtime.Types.Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    wardrobeItems<T extends Prisma.User$wardrobeItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$wardrobeItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WardrobeItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
     catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
     finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
@@ -951,28 +951,16 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
     where?: Prisma.UserWhereInput;
     limit?: number;
 };
-export type User$profileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    select?: Prisma.UserProfileSelect<ExtArgs> | null;
-    omit?: Prisma.UserProfileOmit<ExtArgs> | null;
-    include?: Prisma.UserProfileInclude<ExtArgs> | null;
-    where?: Prisma.UserProfileWhereInput;
-};
-export type User$stylePreferencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    select?: Prisma.StylePreferencesSelect<ExtArgs> | null;
-    omit?: Prisma.StylePreferencesOmit<ExtArgs> | null;
-    include?: Prisma.StylePreferencesInclude<ExtArgs> | null;
-    where?: Prisma.StylePreferencesWhereInput;
-};
-export type User$wardrobeItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    select?: Prisma.WardrobeItemSelect<ExtArgs> | null;
-    omit?: Prisma.WardrobeItemOmit<ExtArgs> | null;
-    include?: Prisma.WardrobeItemInclude<ExtArgs> | null;
-    where?: Prisma.WardrobeItemWhereInput;
-    orderBy?: Prisma.WardrobeItemOrderByWithRelationInput | Prisma.WardrobeItemOrderByWithRelationInput[];
-    cursor?: Prisma.WardrobeItemWhereUniqueInput;
+export type User$conversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    select?: Prisma.ConversationSelect<ExtArgs> | null;
+    omit?: Prisma.ConversationOmit<ExtArgs> | null;
+    include?: Prisma.ConversationInclude<ExtArgs> | null;
+    where?: Prisma.ConversationWhereInput;
+    orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[];
+    cursor?: Prisma.ConversationWhereUniqueInput;
     take?: number;
     skip?: number;
-    distinct?: Prisma.WardrobeItemScalarFieldEnum | Prisma.WardrobeItemScalarFieldEnum[];
+    distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[];
 };
 export type User$outfitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.OutfitSelect<ExtArgs> | null;
@@ -985,17 +973,6 @@ export type User$outfitsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
     skip?: number;
     distinct?: Prisma.OutfitScalarFieldEnum | Prisma.OutfitScalarFieldEnum[];
 };
-export type User$conversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    select?: Prisma.ConversationSelect<ExtArgs> | null;
-    omit?: Prisma.ConversationOmit<ExtArgs> | null;
-    include?: Prisma.ConversationInclude<ExtArgs> | null;
-    where?: Prisma.ConversationWhereInput;
-    orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[];
-    cursor?: Prisma.ConversationWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[];
-};
 export type User$shoppingRecommendationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.ShoppingRecommendationSelect<ExtArgs> | null;
     omit?: Prisma.ShoppingRecommendationOmit<ExtArgs> | null;
@@ -1006,6 +983,29 @@ export type User$shoppingRecommendationsArgs<ExtArgs extends runtime.Types.Exten
     take?: number;
     skip?: number;
     distinct?: Prisma.ShoppingRecommendationScalarFieldEnum | Prisma.ShoppingRecommendationScalarFieldEnum[];
+};
+export type User$stylePreferencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    select?: Prisma.StylePreferencesSelect<ExtArgs> | null;
+    omit?: Prisma.StylePreferencesOmit<ExtArgs> | null;
+    include?: Prisma.StylePreferencesInclude<ExtArgs> | null;
+    where?: Prisma.StylePreferencesWhereInput;
+};
+export type User$profileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    select?: Prisma.UserProfileSelect<ExtArgs> | null;
+    omit?: Prisma.UserProfileOmit<ExtArgs> | null;
+    include?: Prisma.UserProfileInclude<ExtArgs> | null;
+    where?: Prisma.UserProfileWhereInput;
+};
+export type User$wardrobeItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    select?: Prisma.WardrobeItemSelect<ExtArgs> | null;
+    omit?: Prisma.WardrobeItemOmit<ExtArgs> | null;
+    include?: Prisma.WardrobeItemInclude<ExtArgs> | null;
+    where?: Prisma.WardrobeItemWhereInput;
+    orderBy?: Prisma.WardrobeItemOrderByWithRelationInput | Prisma.WardrobeItemOrderByWithRelationInput[];
+    cursor?: Prisma.WardrobeItemWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.WardrobeItemScalarFieldEnum | Prisma.WardrobeItemScalarFieldEnum[];
 };
 export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.UserSelect<ExtArgs> | null;

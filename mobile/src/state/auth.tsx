@@ -18,7 +18,7 @@ interface AuthContextValue {
   isRestoring: boolean;
   error: string | null;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, displayName?: string) => Promise<void>;
+  signUp: (email: string, password: string, displayName?: string, gender?: string) => Promise<void>;
   signOut: () => Promise<void>;
   updateUser: (nextUser: PublicUser) => void;
   clearError: () => void;
@@ -81,11 +81,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
   );
 
   const signUp = useCallback(
-    async (email: string, password: string, displayName?: string) => {
+    async (email: string, password: string, displayName?: string, gender?: string) => {
       try {
         const { token, user } = await api.post<{ token: string; user: PublicUser }>(
           '/auth/signup',
-          { email, password, displayName },
+          { email, password, displayName, gender },
         );
         await applyAuth(token, user);
       } catch (err) {
