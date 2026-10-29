@@ -7,17 +7,17 @@ export declare class ChatController {
     constructor(chatService: ChatService);
     getConversation(user: AuthUser): Promise<{
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         userId: string;
         title: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     getMessages(user: AuthUser, id: string): Promise<{
         id: string;
         createdAt: Date;
-        content: import("@prisma/client/runtime/client").JsonValue;
         conversationId: string;
         role: import("../generated/prisma/enums.js").Role;
+        content: import("@prisma/client/runtime/client").JsonValue;
     }[]>;
     sendMessage(user: AuthUser, body: {
         content: string;
@@ -26,32 +26,32 @@ export declare class ChatController {
         userMessage: {
             id: string;
             createdAt: Date;
-            content: import("@prisma/client/runtime/client").JsonValue;
             conversationId: string;
             role: import("../generated/prisma/enums.js").Role;
+            content: import("@prisma/client/runtime/client").JsonValue;
         };
         assistantMessage: {
             id: string;
             createdAt: Date;
-            content: import("@prisma/client/runtime/client").JsonValue;
             conversationId: string;
             role: import("../generated/prisma/enums.js").Role;
+            content: import("@prisma/client/runtime/client").JsonValue;
         };
     }>;
     listConversations(user: AuthUser): Promise<({
         messages: {
             id: string;
             createdAt: Date;
-            content: import("@prisma/client/runtime/client").JsonValue;
             conversationId: string;
             role: import("../generated/prisma/enums.js").Role;
+            content: import("@prisma/client/runtime/client").JsonValue;
         }[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         userId: string;
         title: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     })[]>;
 }
 export {};

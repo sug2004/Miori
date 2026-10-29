@@ -124,6 +124,8 @@ let ChatService = ChatService_1 = class ChatService {
             .join('\n');
         const isFirstMessage = history.filter((m) => m.role === 'ASSISTANT').length === 0;
         let userPrompt;
+        let structuredOutfits = [];
+        let itemById = new Map();
         if (this.needsWardrobe(content, historyText)) {
             const occasion = this.extractOccasion(content, historyText);
             const targetFormality = OCCASION_FORMALITY[occasion] ?? 2;
@@ -151,6 +153,7 @@ let ChatService = ChatService_1 = class ChatService {
                 season: item.season,
                 favorite: item.favorite,
                 wearCount: item.wearCount,
+                imageUrl: item.imageUrl || item.photoUrl || item.image || null,
                 score: scoreItem({ favorite: item.favorite, wearCount: item.wearCount, updatedAt: item.updatedAt, formality: item.formality }, targetFormality),
             }))
                 .sort((a, b) => b.score - a.score);
@@ -162,6 +165,7 @@ let ChatService = ChatService_1 = class ChatService {
                     byCategory[item.category].push(item);
             }
             const topItems = Object.values(byCategory).flat();
+            itemById = new Map(topItems.map((i) => [i.id, i]));
             const outfitSummary = savedOutfits.map((o) => ({
                 title: o.title,
                 occasion: o.occasion,
@@ -184,7 +188,7 @@ let ChatService = ChatService_1 = class ChatService {
         }
         else {
             userPrompt = [
-                historyText ? `CONVERSATION SO FAR:\n${historyText}` : '',
+                historyText ? `CONVERSAGEN SO FAR:\n${historyText}` : '',
                 `USER: ${content}`,
                 '',
                 isFirstMessage
@@ -204,11 +208,34 @@ let ChatService = ChatService_1 = class ChatService {
             this.logger.error(`AI call failed: ${err.message}`);
             reply = "Hmm~ I'm having a little trouble connecting right now. Try again in a sec? 🌸";
         }
+        if (this.needsWardrobe(content, historyText) && reply?.trim()) {
+            const ID_RE = /\b(c[a-z0-9]{20,26})\b/g;
+            const hasOptions = /\bOption\s+\d/i.test(reply);
+            if (hasOptions) {
+                const blocks = reply.split(/(?=\*{0,2}Option\s+\d)/i).filter(Boolean);
+                for (const block of blocks) {
+                    const titleMatch = block.match(/Option\s+(\d+)[^\n]*/i);
+                    const title = titleMatch ? `Option ${titleMatch[1]}` : null;
+                    if (!title)
+                        continue;
+                    const ids = [...new Set([...block.matchAll(ID_RE)].map((m) => m[1]))];
+                    const items = ids.map((id) => itemById.get(id)).filter(Boolean);
+                    if (items.length >= 2)
+                        structuredOutfits.push({ title, items });
+                }
+            }
+            else {
+                const ids = [...new Set([...reply.matchAll(ID_RE)].map((m) => m[1]))];
+                const items = ids.map((id) => itemById.get(id)).filter(Boolean);
+                if (items.length >= 2)
+                    structuredOutfits.push({ title: 'Outfit', items });
+            }
+        }
         const assistantMsg = await this.prisma.message.create({
             data: {
                 conversationId: conv.id,
                 role: 'ASSISTANT',
-                content: { text: reply, persona: 'mio' },
+                content: { text: reply, persona: 'mio', ...(structuredOutfits.length ? { outfits: structuredOutfits } : {}) },
             },
         });
         await this.prisma.conversation.update({ where: { id: conv.id }, data: { updatedAt: new Date() } });

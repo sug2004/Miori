@@ -92,6 +92,7 @@ export default function ChatScreen() {
           {messages.map((m) => {
             const isUser = m.role === 'USER';
             const text = typeof m.content === 'string' ? m.content : (m.content?.text ?? '');
+            const outfits = Array.isArray((m.content as any)?.outfits) ? (m.content as any).outfits : [];
             return (
               <View key={m.id} className={`flex-row ${isUser ? 'justify-end' : 'justify-start'}`}>
                 {!isUser && (
@@ -100,7 +101,7 @@ export default function ChatScreen() {
                   </View>
                 )}
                 <View
-                  className={`max-w-[78%] rounded-2xl px-4 py-2.5 ${
+                  className={`max-w-[90%] rounded-2xl px-4 py-2.5 ${
                     isUser
                       ? 'bg-accent rounded-br-md'
                       : 'bg-surface border border-line rounded-bl-md'
@@ -109,6 +110,33 @@ export default function ChatScreen() {
                   <Text className={`text-[15px] leading-[22px] ${isUser ? 'text-white' : 'text-ink'}`}>
                     {text}
                   </Text>
+                  {!isUser && outfits.length > 0 && (
+                    <View className="mt-3">
+                      {outfits.map((outfit: any, oi: number) => (
+                        <View key={oi} className="mb-3 last:mb-0">
+                          <Text className="mb-2 text-xs font-semibold text-muted">{outfit.title || `Option ${oi + 1}`}</Text>
+                          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10 }}>
+                            {(outfit.items || []).map((item: any) => (
+                              <View key={item.id} className="w-28">
+                                <View className="h-36 w-28 overflow-hidden rounded-xl border border-line bg-background">
+                                  {item.imageUrl ? (
+                                    <Image source={{ uri: item.imageUrl }} style={{ width: '100%', height: '100%' }} contentFit="cover" />
+                                  ) : (
+                                    <View className="flex-1 items-center justify-center px-1">
+                                      <Text className="text-[10px] text-muted text-center">{item.subcategory || item.category}</Text>
+                                    </View>
+                                  )}
+                                </View>
+                                <Text className="mt-1 text-[10px] text-muted" numberOfLines={1}>
+                                  {item.color ? `${item.color} ${item.subcategory || item.category}` : (item.subcategory || item.category)}
+                                </Text>
+                              </View>
+                            ))}
+                          </ScrollView>
+                        </View>
+                      ))}
+                    </View>
+                  )}
                 </View>
               </View>
             );
@@ -129,23 +157,24 @@ export default function ChatScreen() {
         {/* Input bar */}
         <View
           style={{ paddingBottom: Math.max(insets.bottom, 8) }}
-          className="flex-row items-center gap-2 border-t border-line bg-background px-4 pt-2"
+          className="flex-row items-end gap-2 border-t border-line bg-background px-4 pt-2"
         >
           <TextInput
             value={input}
             onChangeText={setInput}
             placeholder="Message Mio..."
             placeholderTextColor="#9CA3AF"
-            className="flex-1 rounded-full border border-line bg-surface px-4 py-2.5 text-ink"
-            returnKeyType="send"
-            onSubmitEditing={send}
+            className="flex-1 rounded-2xl border border-line bg-surface px-4 py-2.5 text-ink"
+            returnKeyType="default"
+            multiline
             blurOnSubmit={false}
-            multiline={false}
+            textAlignVertical="top"
+            style={{ minHeight: 40, maxHeight: 100 }}
           />
           <Pressable
             onPress={send}
             disabled={sending || !input.trim()}
-            className="h-10 items-center justify-center rounded-full bg-accent px-5 disabled:opacity-50"
+            className="h-10 items-center justify-center rounded-full bg-accent px-5 disabled:opacity-50 self-end mb-0.5"
           >
             <Text className="font-semibold text-white">Send</Text>
           </Pressable>

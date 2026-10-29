@@ -7,17 +7,17 @@ export declare class ChatService {
     constructor(prisma: PrismaService, ai: AiService);
     getOrCreateConversation(userId: string): Promise<{
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         userId: string;
         title: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     getMessages(userId: string, conversationId: string): Promise<{
         id: string;
         createdAt: Date;
-        content: import("@prisma/client/runtime/client").JsonValue;
         conversationId: string;
         role: import("../generated/prisma/enums.js").Role;
+        content: import("@prisma/client/runtime/client").JsonValue;
     }[]>;
     private needsWardrobe;
     private extractOccasion;
@@ -26,31 +26,31 @@ export declare class ChatService {
         userMessage: {
             id: string;
             createdAt: Date;
-            content: import("@prisma/client/runtime/client").JsonValue;
             conversationId: string;
             role: import("../generated/prisma/enums.js").Role;
+            content: import("@prisma/client/runtime/client").JsonValue;
         };
         assistantMessage: {
             id: string;
             createdAt: Date;
-            content: import("@prisma/client/runtime/client").JsonValue;
             conversationId: string;
             role: import("../generated/prisma/enums.js").Role;
+            content: import("@prisma/client/runtime/client").JsonValue;
         };
     }>;
     listConversations(userId: string): Promise<({
         messages: {
             id: string;
             createdAt: Date;
-            content: import("@prisma/client/runtime/client").JsonValue;
             conversationId: string;
             role: import("../generated/prisma/enums.js").Role;
+            content: import("@prisma/client/runtime/client").JsonValue;
         }[];
     } & {
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         userId: string;
         title: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     })[]>;
 }
