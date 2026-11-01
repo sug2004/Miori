@@ -68,14 +68,18 @@ const PINS: InspirationPin[] = [
 
 const STYLES = ['For You', 'Minimal', 'Streetwear', 'Formal', 'Casual', 'Athleisure'];
 
-const STYLE_QUERIES: Record<string, string> = {
-  'for you': 'fashion outfit aesthetic',
-  minimal: 'minimal outfit aesthetic',
-  streetwear: 'streetwear outfit aesthetic',
-  formal: 'formal outfit aesthetic',
-  casual: 'casual outfit aesthetic',
-  athleisure: 'athleisure outfit aesthetic',
+const STYLE_QUERIES: Record<string, string[]> = {
+  'for you': ['fashion outfit aesthetic', 'style inspiration outfit', 'trendy outfit ideas', 'fashion look aesthetic', 'outfit inspo daily'],
+  minimal: ['minimal outfit aesthetic', 'minimalist fashion look', 'clean minimal style', 'minimal wardrobe outfit', 'simple chic outfit'],
+  streetwear: ['streetwear outfit aesthetic', 'urban street style', 'streetwear look inspo', 'hype streetwear fit', 'street fashion aesthetic'],
+  formal: ['formal outfit aesthetic', 'smart formal look', 'elegant formal style', 'business formal outfit', 'chic formal fashion'],
+  casual: ['casual outfit aesthetic', 'everyday casual look', 'casual chic style', 'relaxed casual outfit', 'casual fashion inspo'],
+  athleisure: ['athleisure outfit aesthetic', 'sporty chic look', 'gym to street outfit', 'athletic fashion style', 'activewear outfit inspo'],
 };
+
+function pickQuery(queries: string[]): string {
+  return queries[Math.floor(Math.random() * queries.length)];
+}
 
 type PinterestImage = { url?: string; width?: number; height?: number };
 
@@ -91,16 +95,19 @@ export class InspirationService {
     const bookmarks = filters.bookmarks || undefined;
     const gender = filters.gender?.toLowerCase();
     const genderTerm = gender === 'male' ? 'men' : gender === 'female' ? 'women' : '';
-    const baseQuery = search ?? STYLE_QUERIES[style] ?? STYLE_QUERIES['for you'];
+    const queries = STYLE_QUERIES[style] ?? STYLE_QUERIES['for you'];
+    const baseQuery = search ?? pickQuery(queries);
     const query = genderTerm ? `${genderTerm} ${baseQuery}` : baseQuery;
+    // On initial load (page 1, no bookmark) use a random starting page so feed varies each visit
+    const effectivePage = (!bookmarks && page === 1) ? Math.floor(Math.random() * 8) + 1 : page;
 
-    const live = await this.pinterestSearch(query, page, bookmarks);
+    const live = await this.pinterestSearch(query, effectivePage, bookmarks);
     if (live.pins.length > 0) {
       const hasMore = Boolean(live.nextBookmark) && live.nextBookmark !== '-end-';
       return {
         source: 'pinterest' as const,
         pins: live.pins,
-        page,
+        page: effectivePage,
         hasMore,
         nextBookmark: hasMore ? live.nextBookmark : null,
       };

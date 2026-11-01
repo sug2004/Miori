@@ -11,7 +11,7 @@ interface ScreenProps {
 export function Screen({ children, scroll = false }: ScreenProps) {
   if (scroll) {
     return (
-      <SafeAreaView className="flex-1 bg-background" edges={['top', 'left', 'right']}>
+      <SafeAreaView className="flex-1 bg-background" edges={['top', 'left', 'right', 'bottom']}>
         <KeyboardAwareScrollView
           style={{ flex: 1 }}
           contentContainerStyle={{ flexGrow: 1, paddingBottom: 48 }}
@@ -26,7 +26,7 @@ export function Screen({ children, scroll = false }: ScreenProps) {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-background" edges={['top', 'left', 'right']}>
+    <SafeAreaView className="flex-1 bg-background" edges={['top', 'left', 'right', 'bottom']}>
       <KeyboardAvoidingView className="flex-1" behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View className="flex-1">{children}</View>
       </KeyboardAvoidingView>

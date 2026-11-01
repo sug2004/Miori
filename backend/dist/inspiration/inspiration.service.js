@@ -59,13 +59,16 @@ const PINS = [
 ];
 const STYLES = ['For You', 'Minimal', 'Streetwear', 'Formal', 'Casual', 'Athleisure'];
 const STYLE_QUERIES = {
-    'for you': 'fashion outfit aesthetic',
-    minimal: 'minimal outfit aesthetic',
-    streetwear: 'streetwear outfit aesthetic',
-    formal: 'formal outfit aesthetic',
-    casual: 'casual outfit aesthetic',
-    athleisure: 'athleisure outfit aesthetic',
+    'for you': ['fashion outfit aesthetic', 'style inspiration outfit', 'trendy outfit ideas', 'fashion look aesthetic', 'outfit inspo daily'],
+    minimal: ['minimal outfit aesthetic', 'minimalist fashion look', 'clean minimal style', 'minimal wardrobe outfit', 'simple chic outfit'],
+    streetwear: ['streetwear outfit aesthetic', 'urban street style', 'streetwear look inspo', 'hype streetwear fit', 'street fashion aesthetic'],
+    formal: ['formal outfit aesthetic', 'smart formal look', 'elegant formal style', 'business formal outfit', 'chic formal fashion'],
+    casual: ['casual outfit aesthetic', 'everyday casual look', 'casual chic style', 'relaxed casual outfit', 'casual fashion inspo'],
+    athleisure: ['athleisure outfit aesthetic', 'sporty chic look', 'gym to street outfit', 'athletic fashion style', 'activewear outfit inspo'],
 };
+function pickQuery(queries) {
+    return queries[Math.floor(Math.random() * queries.length)];
+}
 let InspirationService = InspirationService_1 = class InspirationService {
     logger = new Logger(InspirationService_1.name);
     styles = STYLES;
@@ -76,15 +79,17 @@ let InspirationService = InspirationService_1 = class InspirationService {
         const bookmarks = filters.bookmarks || undefined;
         const gender = filters.gender?.toLowerCase();
         const genderTerm = gender === 'male' ? 'men' : gender === 'female' ? 'women' : '';
-        const baseQuery = search ?? STYLE_QUERIES[style] ?? STYLE_QUERIES['for you'];
+        const queries = STYLE_QUERIES[style] ?? STYLE_QUERIES['for you'];
+        const baseQuery = search ?? pickQuery(queries);
         const query = genderTerm ? `${genderTerm} ${baseQuery}` : baseQuery;
-        const live = await this.pinterestSearch(query, page, bookmarks);
+        const effectivePage = (!bookmarks && page === 1) ? Math.floor(Math.random() * 8) + 1 : page;
+        const live = await this.pinterestSearch(query, effectivePage, bookmarks);
         if (live.pins.length > 0) {
             const hasMore = Boolean(live.nextBookmark) && live.nextBookmark !== '-end-';
             return {
                 source: 'pinterest',
                 pins: live.pins,
-                page,
+                page: effectivePage,
                 hasMore,
                 nextBookmark: hasMore ? live.nextBookmark : null,
             };

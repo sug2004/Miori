@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Modal, PanResponder, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 
 import { Image } from 'expo-image';
 import { router, useFocusEffect } from 'expo-router';
@@ -44,6 +44,16 @@ export default function InspirationScreen() {
   const filterRef = useRef(filter);
   const searchRef = useRef('');
   const cursorRef = useRef<string | null>(null);
+
+  const swipePan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: (_, g) => g.dy > 5,
+      onPanResponderRelease: (_, g) => {
+        if (g.dy > 60 || g.vy > 0.5) setSelected(null);
+      },
+    }),
+  ).current;
 
   useEffect(() => {
     let active = true;
@@ -374,20 +384,23 @@ export default function InspirationScreen() {
         visible={!!selected}
         transparent
         animationType="slide"
+        statusBarTranslucent
         onRequestClose={() => setSelected(null)}>
-        <View className="flex-1 bg-black/70">
+        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.75)' }}>
           <Pressable
-            className="absolute inset-0"
+            style={{ flex: 1 }}
             accessibilityLabel="Close pin details"
             onPress={() => setSelected(null)}
           />
           <SafeAreaView
             edges={['bottom']}
-            className="absolute inset-x-0 bottom-0 rounded-t-3xl border-t border-line bg-background"
-            style={{ top: 56 }}>
-            <View className="items-center pb-1 pt-2.5">
-              <View className="h-1 w-10 rounded-full bg-border" />
-            </View>
+            style={{ backgroundColor: '#0D0E0C', borderTopLeftRadius: 24, borderTopRightRadius: 24, borderTopWidth: 1, borderColor: '#34302A', maxHeight: '92%' }}>
+            <Pressable
+              onPress={() => setSelected(null)}
+              {...swipePan.panHandlers}
+              style={{ alignItems: 'center', paddingTop: 10, paddingBottom: 4, paddingHorizontal: 20 }}>
+              <View style={{ width: 40, height: 4, borderRadius: 2, backgroundColor: '#A49C90' }} />
+            </Pressable>
             <ScrollView
               showsVerticalScrollIndicator={false}
               bounces
